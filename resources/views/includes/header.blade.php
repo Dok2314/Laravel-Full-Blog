@@ -18,8 +18,13 @@
             </form>
 
             <div class="text-end">
+                @auth
+                    <a href="{{ route('user.logout') }}"><button type="button" class="btn btn-warning">Выйти</button></a>
+                @endauth
+                @guest
                 <a href="{{ route('user.login') }}"><button type="button" class="btn btn-outline-light me-2">Вход</button></a>
                 <a href="{{ route('user.registration') }}"><button type="button" class="btn btn-warning">Регестрация</button></a>
+                @endguest
             </div>
         </div>
     </div>
