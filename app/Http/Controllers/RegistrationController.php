@@ -25,7 +25,8 @@ class RegistrationController extends Controller
         ));
 
         if($request->has('avatar')) {
-            $user->addMedia($request->file('avatar'))
+            $user
+                ->addMedia($request->file('avatar'))
                 ->toMediaCollection();
         }
 

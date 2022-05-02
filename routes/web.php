@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RegistrationController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\CategoriesController;
 
 /*
 |--------------------------------------------------------------------------
@@ -40,4 +41,12 @@ Route::group(['prefix' => 'authorize', 'as' => 'user.'], function(){
 
    Route::post('/registration',[RegistrationController::class, 'registration']);
    Route::post('/login',[LoginController::class, 'login']);
+});
+
+Route::group(['prefix' => 'category', 'as' => 'CRUD.'], function(){
+    Route::get('/create', [CategoriesController::class, 'categoryView'])
+        ->name('categoryCreateView');
+
+    Route::post('/create', [CategoriesController::class, 'create'])
+    ->name('create');
 });
