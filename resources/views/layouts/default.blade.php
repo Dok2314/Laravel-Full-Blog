@@ -14,6 +14,8 @@
 {{--HEADER--}}
 @include('includes.header')
 
+@include('includes.sessionSuccess')
+
 @yield('content')
 
 @include('includes.footer')

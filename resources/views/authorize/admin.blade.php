@@ -8,11 +8,6 @@ $name = Auth::user()->name;
 
 @section('content')
     <h1>Здравствуйте {{ Auth::user()->name }}</h1>
-    @if(session()->has('success'))
-        <div class="alert alert-success">
-            {{ session()->get('success') }}
-        </div>
-    @endif
     <div class="alert alert-info">
         <div class="row">
             <div class="col-md-6">
@@ -20,9 +15,19 @@ $name = Auth::user()->name;
             </div>
             <div class="col-md-6">
                 <h2 style="text-align: center">Действия</h2>
-               <div style="text-align: center">
-                   <a href="{{ route('CRUD.categoryCreateView') }}"><button class="btn btn-info">Создать Категорию</button></a>
-                   <a href=""><button class="btn btn-info">Создать Пост</button></a>
+               <div class="row">
+                   <div class="col-md-6">
+                       <div style="text-align: center">
+                           <h2 style="text-align: center">Создание</h2>
+                           <a href="{{ route('CRUD.categoryCreateView') }}"><button class="btn btn-info">Создать Категорию</button></a>
+                           <a href=""><button class="btn btn-info">Создать Пост</button></a>
+                       </div>
+                   </div>
+                   <div class="col-md-6">
+                       <h2 style="text-align: center">Списки</h2>
+                       <a href="{{ route('CRUD.categoryAll') }}"><button class="btn btn-primary">Все категории</button></a>
+                       <a href=""><button class="btn btn-primary">Все посты</button></a>
+                   </div>
                </div>
             </div>
         </div>

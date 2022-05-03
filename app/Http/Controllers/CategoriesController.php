@@ -14,6 +14,7 @@ class CategoriesController extends Controller
 
     public function create(CategoryRequest $request)
     {
+
         Category::firstOrCreate([
             'title'       => $request->title,
             'slug'        => $request->title,
@@ -23,6 +24,23 @@ class CategoriesController extends Controller
         return redirect()->route('user.admin')->with('success', sprintf(
            'Категория %s успешно добавлена!',
             $request->input('title')
+        ));
+    }
+
+    public function categoryAll()
+    {
+        $categories = Category::all();
+        return view('CRUD.categoryAll', compact('categories'));
+    }
+
+    public function categoryDelete($category_id)
+    {
+        $category = Category::findOrFail($category_id);
+        $category->delete();
+
+        return redirect()->route('CRUD.categoryAll')->with('success', sprintf(
+           'Категория %s успешно удалена!',
+           $category->title
         ));
     }
 }

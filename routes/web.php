@@ -49,4 +49,10 @@ Route::group(['prefix' => 'category', 'as' => 'CRUD.'], function(){
 
     Route::post('/create', [CategoriesController::class, 'create'])
     ->name('create');
+
+    Route::get('/categories', [CategoriesController::class, 'categoryAll'])
+        ->name('categoryAll');
+
+    Route::get('/delete/{category_id}', [CategoriesController::class, 'categoryDelete'])
+        ->name('categoryDelete');
 });
