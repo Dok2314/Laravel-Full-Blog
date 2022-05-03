@@ -43,4 +43,24 @@ class CategoriesController extends Controller
            $category->title
         ));
     }
+
+    public function categoryPreview($category_id)
+    {
+        $category = Category::findOrFail($category_id);
+
+        return view('CRUD.categoryPreview', compact('category'));
+    }
+
+    public function categoryUpdate(CategoryRequest $request, $category_id)
+    {
+        $category = Category::findOrFail($category_id);
+        $category->title       = $request->title;
+        $category->slug        = $request->title;
+        $category->description = $request->description;
+        $category->update();
+
+        return redirect()->route('CRUD.categoryAll')->with('success', sprintf(
+           'Категория успешно обновлена'
+        ));
+    }
 }
