@@ -14,8 +14,7 @@ class CategoriesController extends Controller
 
     public function create(CategoryRequest $request)
     {
-
-        Category::firstOrCreate([
+        Category::create([
             'title'       => $request->title,
             'slug'        => $request->title,
             'description' => $request->description,
@@ -29,7 +28,7 @@ class CategoriesController extends Controller
 
     public function categoryAll()
     {
-        $categories = Category::all();
+        $categories = Category::paginate(5);
         return view('CRUD.categoryAll', compact('categories'));
     }
 

@@ -52,4 +52,9 @@ class User extends Authenticatable implements HasMedia
             return $media->getUrl();
         }
     }
+
+    public function posts()
+    {
+        return $this->hasMany(Post::class);
+    }
 }

@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RegistrationController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\CategoriesController;
+use App\Http\Controllers\PostController;
 
 /*
 |--------------------------------------------------------------------------
@@ -61,4 +62,23 @@ Route::group(['prefix' => 'category', 'as' => 'CRUD.'], function(){
 
     Route::post('/preview/{category_id}', [CategoriesController::class, 'categoryUpdate'])
         ->name('categoryUpdate');
+});
+
+Route::group(['prefix' => 'post', 'as' => 'post.'], function(){
+   Route::get('/create', [PostController::class, 'postCreateView'])
+       ->name('postCreateView');
+
+   Route::post('/create', [PostController::class, 'createPost']);
+
+   Route::get('/posts', [PostController::class, 'postAll'])
+        ->name('postAll');
+
+   Route::get('/delete/{post_id}', [PostController::class, 'deletePost'])
+        ->name('delete');
+
+   Route::get('/preview/{post_id}', [PostController::class, 'postPreview'])
+        ->name('preview');
+
+    Route::post('/preview/{post_id}', [PostController::class, 'postUpdate'])
+        ->name('postUpdate');
 });

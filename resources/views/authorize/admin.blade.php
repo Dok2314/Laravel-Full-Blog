@@ -11,7 +11,7 @@ $name = Auth::user()->name;
     <div class="alert alert-info">
         <div class="row">
             <div class="col-md-6">
-                <img src="{{ Auth::user()->getAvatarUrl() }}" alt="">
+                <img src="{{ Auth::user()->getAvatarUrl() }}" width="400" height="400" alt="">
             </div>
             <div class="col-md-6">
                 <h2 style="text-align: center">Действия</h2>
@@ -20,13 +20,13 @@ $name = Auth::user()->name;
                        <div style="text-align: center">
                            <h2 style="text-align: center">Создание</h2>
                            <a href="{{ route('CRUD.categoryCreateView') }}"><button class="btn btn-info">Создать Категорию</button></a>
-                           <a href=""><button class="btn btn-info">Создать Пост</button></a>
+                           <a href="{{ route('post.postCreateView') }}"><button class="btn btn-info">Создать Пост</button></a>
                        </div>
                    </div>
                    <div class="col-md-6">
                        <h2 style="text-align: center">Списки</h2>
                        <a href="{{ route('CRUD.categoryAll') }}"><button class="btn btn-primary">Все категории</button></a>
-                       <a href=""><button class="btn btn-primary">Все посты</button></a>
+                       <a href="{{ route('post.postAll') }}"><button class="btn btn-primary">Все посты</button></a>
                    </div>
                </div>
             </div>
