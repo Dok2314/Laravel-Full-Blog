@@ -21,12 +21,14 @@ $name = Auth::user()->name;
                            <h2 style="text-align: center">Создание</h2>
                            <a href="{{ route('CRUD.categoryCreateView') }}"><button class="btn btn-info">Создать Категорию</button></a>
                            <a href="{{ route('post.postCreateView') }}"><button class="btn btn-info">Создать Пост</button></a>
+                           <a href="{{ route('permission.permissionView') }}"><button class="btn btn-info mt-1">Создать Право</button></a>
                        </div>
                    </div>
                    <div class="col-md-6">
                        <h2 style="text-align: center">Списки</h2>
                        <a href="{{ route('CRUD.categoryAll') }}"><button class="btn btn-primary">Все категории</button></a>
                        <a href="{{ route('post.postAll') }}"><button class="btn btn-primary">Все посты</button></a>
+                       <a href="{{ route('permission.permissionAll') }}"><button class="btn btn-primary mt-1">Все права</button></a>
                    </div>
                </div>
             </div>

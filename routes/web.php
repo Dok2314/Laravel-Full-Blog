@@ -5,6 +5,7 @@ use App\Http\Controllers\RegistrationController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\CategoriesController;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\PermissionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -81,4 +82,24 @@ Route::group(['prefix' => 'post', 'as' => 'post.'], function(){
 
     Route::post('/preview/{post_id}', [PostController::class, 'postUpdate'])
         ->name('postUpdate');
+});
+
+Route::group(['prefix' => 'permission', 'as' => 'permission.'], function(){
+    Route::get('/create', [PermissionController::class, 'permissionView'])
+        ->name('permissionView');
+
+    Route::post('/create', [PermissionController::class, 'createPermission'])
+        ->name('createPermission');
+
+    Route::get('/permissions', [PermissionController::class, 'permissionAll'])
+        ->name('permissionAll');
+
+    Route::get('/delete/{permission_id}', [PermissionController::class, 'deletePermission'])
+        ->name('deletePermission');
+
+    Route::get('/preview/{permission_id}', [PermissionController::class, 'previewPermission'])
+        ->name('previewPermission');
+
+    Route::post('/update/{permission_id}', [PermissionController::class, 'updatePermission'])
+        ->name('updatePermission');
 });
