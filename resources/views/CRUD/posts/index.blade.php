@@ -24,10 +24,14 @@
                 </td>
                 <td style="text-align: center">
                     @can('post delete')
-                        <a href="{{ route('post.delete', $post->id) }}"><button class="btn btn-danger">Удалить</button></a>
+                        <form action="{{ route('post.delete', $post) }}" method="post">
+                            @method('DELETE')
+                            @csrf
+                            <button type="submit" class="btn btn-danger">Удалить</button>
+                        </form>
                     @endcan
                     @can('post edit')
-                            <a href="{{ route('post.preview', $post->id) }}"><button class="btn btn-primary">Редактировать</button></a>
+                        <a href="{{ route('post.edit', $post->id) }}"><button class="btn btn-primary">Редактировать</button></a>
                     @endcan
                 </td>
             </tr>

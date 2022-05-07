@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\PostRequest;
 use App\Models\Category;
+use App\Models\Permission;
+use App\Models\Role;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Post;
 
@@ -19,14 +21,14 @@ class PostController extends Controller
         return Post::paginate(5);
     }
 
-    public function postCreateView()
+    public function create()
     {
         $categories = $this->getCategories();
 
-        return view('CRUD.postIndex', compact('categories'));
+        return view('CRUD.posts.create', compact('categories'));
     }
 
-    public function createPost(PostRequest $request)
+    public function store(PostRequest $request)
     {
         $post = new Post([
             'title'       => $request->title,
@@ -45,35 +47,29 @@ class PostController extends Controller
         ));
     }
 
-    public function postAll()
+    public function index()
     {
         $posts = $this->getPosts();
 
-        return view('CRUD.postAll', compact('posts'));
+        return view('CRUD.posts.index', compact('posts'));
     }
 
-    public function deletePost($post_id)
+    public function destroy(Post $post)
     {
-        $post = Post::findOrFail($post_id);
         $post->delete();
 
-        return redirect()->route('post.postAll')->with('success', sprintf(
-           'Пост %s успешно удалён',
-                $post->title
-        ));
+        return redirect()->route('post.index')->with('success', 'Пост успешно удален');
     }
 
-    public function postPreview($post_id)
+    public function edit(Post $post)
     {
-        $post = Post::findOrFail($post_id);
         $categories = Category::all();
 
-        return view('CRUD.postPreview', compact('post', 'categories'));
+        return view('CRUD.posts.edit', compact('post', 'categories'));
     }
 
-    public function postUpdate(PostRequest $request, $post_id)
+    public function update(PostRequest $request, Post $post)
     {
-        $post = Post::findOrFail($post_id);
         $post->title = $request->title;
         $post->slug  = $request->title;
         $post->post  = $request->post;
@@ -81,7 +77,7 @@ class PostController extends Controller
         $post->category()->associate($request->category_id);
 
         $post->update();
-        return redirect()->route('post.postAll')->with('success', sprintf(
+        return redirect()->route('post.index')->with('success', sprintf(
            'Пост %s успешно обновлен!',
                     $post->title
         ));

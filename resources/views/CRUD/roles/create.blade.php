@@ -15,11 +15,16 @@
                 {{ $message }}
             </div>
             @enderror
-            @foreach($permissions as $permission)
-                <input type="checkbox"
-                       name="permissions[]"
-                       value="{{ $permission->id }}"
-                >{{ $permission->name }}<br>
+            <hr><h2>Права</h2></hr>
+            @foreach($permissions->groupBy(fn($permission) => \Str::before($permission->code, ' ')) AS $name => $items)
+                <h3>{{ ucfirst($name) }}</h3>
+                @foreach($items as $permission)
+                    <input type="checkbox"
+                           id="{{ $permission->name }}"
+                           name="permissions[]"
+                           value="{{ $permission->id }}"
+                    ><label for="{{ $permission->name }}">{{ $permission->name }}</label><br>
+                @endforeach
             @endforeach
             <button class="btn btn-primary mt-3" type="submit">Создать</button>
         </form>

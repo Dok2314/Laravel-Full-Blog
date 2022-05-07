@@ -20,10 +20,10 @@ $name = Auth::user()->name;
                        <div style="text-align: center">
                            <h2 style="text-align: center">Создание</h2>
                            @can('category create')
-                           <a href="{{ route('CRUD.categoryCreateView') }}"><button class="btn btn-info">Создать Категорию</button></a>
+                           <a href="{{ route('category.create') }}"><button class="btn btn-info">Создать Категорию</button></a>
                            @endcan
                            @can('post create')
-                           <a href="{{ route('post.postCreateView') }}"><button class="btn btn-info">Создать Пост</button></a>
+                           <a href="{{ route('post.create') }}"><button class="btn btn-info">Создать Пост</button></a>
                            @endcan
                            @can('users create')
                            <a href="{{ route('users.create') }}"><button class="btn btn-info mt-1">Создать Пользователя</button></a>
@@ -36,10 +36,10 @@ $name = Auth::user()->name;
                    <div class="col-md-6">
                        <h2 style="text-align: center">Списки</h2>
                        @can('category view')
-                       <a href="{{ route('CRUD.categoryAll') }}"><button class="btn btn-primary">Все категории</button></a>
+                       <a href="{{ route('category.index') }}"><button class="btn btn-primary">Категории</button></a>
                        @endcan
                        @can('post view')
-                           <a href="{{ route('post.postAll') }}"><button class="btn btn-primary">Все посты</button></a>
+                           <a href="{{ route('post.index') }}"><button class="btn btn-primary">Посты</button></a>
                        @endcan
                        @can('role view')
                            <a href="{{ route('roles.index') }}"><button class="btn btn-primary mt-1">Роли</button></a>

@@ -3,9 +3,6 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RegistrationController;
 use App\Http\Controllers\LoginController;
-use App\Http\Controllers\CategoriesController;
-use App\Http\Controllers\PostController;
-use App\Http\Controllers\PermissionController;
 use App\Http\Controllers AS C;
 
 /*
@@ -46,66 +43,29 @@ Route::group(['prefix' => 'authorize', 'as' => 'user.'], function(){
    Route::post('/login',[LoginController::class, 'login']);
 });
 
-Route::group(['prefix' => 'category', 'as' => 'CRUD.'], function(){
-    Route::get('/create', [CategoriesController::class, 'categoryView'])
-        ->name('categoryCreateView');
+Route::group(['prefix' => 'categories', 'as' => 'category.'], function(){
+    Route::get('/', [C\CategoriesController::class, 'index'])->name('index');
+    Route::get('create', [C\CategoriesController::class, 'create'])->name('create');
+    Route::post('create', [C\CategoriesController::class, 'store']);
 
-    Route::post('/create', [CategoriesController::class, 'create'])
-    ->name('create');
-
-    Route::get('/categories', [CategoriesController::class, 'categoryAll'])
-        ->name('categoryAll');
-
-    Route::get('/delete/{category_id}', [CategoriesController::class, 'categoryDelete'])
-        ->name('categoryDelete');
-
-    Route::get('/preview/{category_id}', [CategoriesController::class, 'categoryPreview'])
-        ->name('categoryPreview');
-
-    Route::post('/preview/{category_id}', [CategoriesController::class, 'categoryUpdate'])
-        ->name('categoryUpdate');
+    Route::group(['prefix' => '{category}'], function () {
+        Route::get('edit', [C\CategoriesController::class, 'edit'])->name('edit');
+        Route::put('edit', [C\CategoriesController::class, 'update']);
+        Route::delete('/', [C\CategoriesController::class, 'destroy'])->name('delete');
+    });
 });
 
 Route::group(['prefix' => 'post', 'as' => 'post.'], function(){
-   Route::get('/create', [PostController::class, 'postCreateView'])
-       ->name('postCreateView');
+    Route::get('/', [C\PostController::class, 'index'])->name('index');
+    Route::get('create', [C\PostController::class, 'create'])->name('create');
+    Route::post('create', [C\PostController::class, 'store']);
 
-   Route::post('/create', [PostController::class, 'createPost']);
-
-   Route::get('/posts', [PostController::class, 'postAll'])
-        ->name('postAll');
-
-   Route::get('/delete/{post_id}', [PostController::class, 'deletePost'])
-        ->name('delete');
-
-   Route::get('/preview/{post_id}', [PostController::class, 'postPreview'])
-        ->name('preview');
-
-    Route::post('/preview/{post_id}', [PostController::class, 'postUpdate'])
-        ->name('postUpdate');
+    Route::group(['prefix' => '{post}'], function () {
+        Route::get('edit', [C\PostController::class, 'edit'])->name('edit');
+        Route::put('edit', [C\PostController::class, 'update']);
+        Route::delete('/', [C\PostController::class, 'destroy'])->name('delete');
+    });
 });
-
-Route::group(['prefix' => 'permission', 'as' => 'permission.'], function(){
-    Route::get('/create', [PermissionController::class, 'permissionView'])
-        ->name('permissionView');
-
-    Route::post('/create', [PermissionController::class, 'createPermission'])
-        ->name('createPermission');
-
-    Route::get('/permissions', [PermissionController::class, 'permissionAll'])
-        ->name('permissionAll');
-
-    Route::get('/delete/{permission_id}', [PermissionController::class, 'deletePermission'])
-        ->name('deletePermission');
-
-    Route::get('/preview/{permission_id}', [PermissionController::class, 'previewPermission'])
-        ->name('previewPermission');
-
-    Route::post('/update/{permission_id}', [PermissionController::class, 'updatePermission'])
-        ->name('updatePermission');
-});
-
-//'middleware' => 'permission:roles'
 
 Route::group(['prefix' => 'roles', 'as' => 'roles.'], function () {
     Route::get('/', [C\RoleController::class, 'index'])->name('index');

@@ -4,15 +4,16 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\CategoryRequest;
 use App\Models\Category;
+use App\Models\Role;
 
 class CategoriesController extends Controller
 {
-    public function categoryView()
+    public function create()
     {
-        return view('CRUD.categoryIndex');
+        return view('CRUD.categories.create');
     }
 
-    public function create(CategoryRequest $request)
+    public function store(CategoryRequest $request)
     {
         Category::create([
             'title'       => $request->title,
@@ -26,39 +27,32 @@ class CategoriesController extends Controller
         ));
     }
 
-    public function categoryAll()
+    public function index()
     {
         $categories = Category::paginate(5);
-        return view('CRUD.categoryAll', compact('categories'));
+        return view('CRUD.categories.index', compact('categories'));
     }
 
-    public function categoryDelete($category_id)
+    public function destroy(Category $category)
     {
-        $category = Category::findOrFail($category_id);
         $category->delete();
 
-        return redirect()->route('CRUD.categoryAll')->with('success', sprintf(
-           'Категория %s успешно удалена!',
-           $category->title
-        ));
+        return redirect()->route('category.index')->with('success', 'Категория успешно удалена');
     }
 
-    public function categoryPreview($category_id)
+    public function edit(Category $category)
     {
-        $category = Category::findOrFail($category_id);
-
-        return view('CRUD.categoryPreview', compact('category'));
+        return view('CRUD.categories.edit', compact('category'));
     }
 
-    public function categoryUpdate(CategoryRequest $request, $category_id)
+    public function update(CategoryRequest $request, Category $category)
     {
-        $category = Category::findOrFail($category_id);
         $category->title       = $request->title;
         $category->slug        = $request->title;
         $category->description = $request->description;
         $category->update();
 
-        return redirect()->route('CRUD.categoryAll')->with('success', sprintf(
+        return redirect()->route('category.index')->with('success', sprintf(
            'Категория успешно обновлена'
         ));
     }
