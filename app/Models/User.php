@@ -23,7 +23,8 @@ class User extends Authenticatable implements HasMedia
         'name',
         'email',
         'avatar',
-        'password'
+        'password',
+        'role_id'
     ];
 
     /**
@@ -56,5 +57,10 @@ class User extends Authenticatable implements HasMedia
     public function posts()
     {
         return $this->hasMany(Post::class);
+    }
+
+    public function role()
+    {
+        return $this->belongsTo(Role::class);
     }
 }

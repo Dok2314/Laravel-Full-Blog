@@ -6,6 +6,7 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\CategoriesController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\PermissionController;
+use App\Http\Controllers AS C;
 
 /*
 |--------------------------------------------------------------------------
@@ -102,4 +103,30 @@ Route::group(['prefix' => 'permission', 'as' => 'permission.'], function(){
 
     Route::post('/update/{permission_id}', [PermissionController::class, 'updatePermission'])
         ->name('updatePermission');
+});
+
+//'middleware' => 'permission:roles'
+
+Route::group(['prefix' => 'roles', 'as' => 'roles.'], function () {
+    Route::get('/', [C\RoleController::class, 'index'])->name('index');
+    Route::get('create', [C\RoleController::class, 'create'])->name('create');
+    Route::post('create', [C\RoleController::class, 'store']);
+
+    Route::group(['prefix' => '{role}'], function () {
+        Route::get('edit', [C\RoleController::class, 'edit'])->name('edit');
+        Route::put('edit', [C\RoleController::class, 'update']);
+        Route::delete('/', [C\RoleController::class, 'destroy'])->name('delete');
+    });
+});
+
+Route::group(['prefix' => 'users', 'as' => 'users.'], function () {
+    Route::get('/', [C\UserController::class, 'index'])->name('index');
+    Route::get('create', [C\UserController::class, 'create'])->name('create');
+    Route::post('create', [C\UserController::class, 'store']);
+
+    Route::group(['prefix' => '{user}'], function () {
+        Route::get('edit', [C\UserController::class, 'edit'])->name('edit');
+        Route::put('edit', [C\UserController::class, 'update']);
+        Route::delete('/', [C\UserController::class, 'destroy'])->name('delete');
+    });
 });

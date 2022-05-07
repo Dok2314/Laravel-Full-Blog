@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-  const TABLE_NAME = 'users';
+  const TABLE_NAME = 'roles';
 
     public function up()
     {
@@ -14,10 +14,6 @@ return new class extends Migration
             Schema::create(self::TABLE_NAME, function (Blueprint $table){
                $table->id();
                $table->string('name');
-               $table->string('email')->unique();
-               $table->string('password');
-               $table->string('avatar')->nullable();
-               $table->rememberToken();
                $table->softDeletes();
                $table->timestamps();
             });

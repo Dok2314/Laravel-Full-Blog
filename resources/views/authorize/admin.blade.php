@@ -21,14 +21,16 @@ $name = Auth::user()->name;
                            <h2 style="text-align: center">Создание</h2>
                            <a href="{{ route('CRUD.categoryCreateView') }}"><button class="btn btn-info">Создать Категорию</button></a>
                            <a href="{{ route('post.postCreateView') }}"><button class="btn btn-info">Создать Пост</button></a>
-                           <a href="{{ route('permission.permissionView') }}"><button class="btn btn-info mt-1">Создать Право</button></a>
+                           <a href="{{ route('users.create') }}"><button class="btn btn-info mt-1">Создать Пользователя</button></a>
+                           <a href="{{ route('roles.create') }}"><button class="btn btn-info mt-1">Создать Роль</button></a>
                        </div>
                    </div>
                    <div class="col-md-6">
                        <h2 style="text-align: center">Списки</h2>
                        <a href="{{ route('CRUD.categoryAll') }}"><button class="btn btn-primary">Все категории</button></a>
                        <a href="{{ route('post.postAll') }}"><button class="btn btn-primary">Все посты</button></a>
-                       <a href="{{ route('permission.permissionAll') }}"><button class="btn btn-primary mt-1">Все права</button></a>
+                       <a href="{{ route('roles.index') }}"><button class="btn btn-primary mt-1">Роли</button></a>
+                       <a href="{{ route('users.index') }}"><button class="btn btn-primary mt-1">Пользователи</button></a>
                    </div>
                </div>
             </div>

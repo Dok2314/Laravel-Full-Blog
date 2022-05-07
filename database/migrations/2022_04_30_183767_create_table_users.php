@@ -6,15 +6,19 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-  const TABLE_NAME = 'users_permissions';
+  const TABLE_NAME = 'users';
 
     public function up()
     {
         if(!Schema::hasTable(self::TABLE_NAME)) {
             Schema::create(self::TABLE_NAME, function (Blueprint $table){
                $table->id();
-               $table->foreignId('user_id')->constrained('users')->cascadeOnUpdate()->cascadeOnUpdate();
-               $table->foreignId('permission_id')->constrained('permissions')->cascadeOnUpdate()->cascadeOnUpdate();
+               $table->string('name');
+               $table->string('email')->unique();
+               $table->string('password');
+               $table->foreignId('role_id')->constrained('roles')->cascadeOnUpdate()->cascadeOnDelete();
+               $table->string('avatar')->nullable();
+               $table->rememberToken();
                $table->softDeletes();
                $table->timestamps();
             });
