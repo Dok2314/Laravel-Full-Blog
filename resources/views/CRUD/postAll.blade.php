@@ -23,8 +23,12 @@
                     {{ $post->user->name }}
                 </td>
                 <td style="text-align: center">
-                    <a href="{{ route('post.delete', $post->id) }}"><button class="btn btn-danger">Удалить</button></a>
-                    <a href="{{ route('post.preview', $post->id) }}"><button class="btn btn-primary">Редактировать</button></a>
+                    @can('post delete')
+                        <a href="{{ route('post.delete', $post->id) }}"><button class="btn btn-danger">Удалить</button></a>
+                    @endcan
+                    @can('post edit')
+                            <a href="{{ route('post.preview', $post->id) }}"><button class="btn btn-primary">Редактировать</button></a>
+                    @endcan
                 </td>
             </tr>
         @endforeach

@@ -19,12 +19,16 @@
                 <td>{{ $role->name }}</td>
                 <td>{{ $role->created_at }}</td>
                 <td style="text-align: center">
-                    <form action="{{ route('roles.delete', $role) }}" method="post">
-                        @method('DELETE')
-                        @csrf
-                        <button type="submit" class="btn btn-danger">Удалить</button>
-                    </form>
-                    <a href="{{ route('roles.edit', $role) }}"><button class="btn btn-primary">Редактировать</button></a>
+                    @can('role delete')
+                        <form action="{{ route('roles.delete', $role) }}" method="post">
+                            @method('DELETE')
+                            @csrf
+                            <button type="submit" class="btn btn-danger">Удалить</button>
+                        </form>
+                    @endcan
+                    @can('role edit')
+                            <a href="{{ route('roles.edit', $role) }}"><button class="btn btn-primary">Редактировать</button></a>
+                    @endcan
                 </td>
             </tr>
         @endforeach

@@ -19,17 +19,53 @@ class RoleSeeder extends Seeder
             'name' => 'Администратор'
         ]), function (Role $role) {
             $role->permissions()->sync(Permission::whereIn('code', [
+                'category create',
                 'category view',
-                'category delete'
+                'category edit',
+                'category delete',
+                'post create',
+                'post view',
+                'post edit',
+                'post delete',
+                'users create',
+                'users view',
+                'users edit',
+                'users delete',
+                'role create',
+                'role view',
+                'role edit',
+                'role delete'
             ])->get());
         });
 
-        Role::create([
+        tap(Role::create([
             'name' => 'Разработчик'
-        ]);
+        ]), function (Role $role) {
+            $role->permissions()->sync(Permission::whereIn('code', [
+                'category create',
+                'category view',
+                'category edit',
+                'category delete',
+                'post create',
+                'post view',
+                'post edit',
+                'post delete',
+                'users view',
+                'role view'
+            ])->get());
+        });
 
-        Role::create([
+        tap(Role::create([
             'name' => 'Пользователь'
-        ]);
+        ]), function (Role $role) {
+            $role->permissions()->sync(Permission::whereIn('code', [
+                'category create',
+                'category view',
+                'category edit',
+                'post create',
+                'post view',
+                'post edit',
+            ])->get());
+        });
     }
 }

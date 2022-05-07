@@ -27,7 +27,7 @@ class LoginController extends Controller
         }
 
         return back()->withErrors([
-           'email' => 'Неверный данные, повторите попытку.'
+           'email' => 'Неверные данные, повторите попытку.'
         ]);
     }
 }

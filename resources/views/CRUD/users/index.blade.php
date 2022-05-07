@@ -23,8 +23,12 @@
                 <td>{{ $user->email }}</td>
                 <td>{{ $user->created_at }}</td>
                 <td style="text-align: center">
-                    <a href=""><button class="btn btn-danger">Удалить</button></a>
-                    <a href="{{ route('users.edit', $user) }}"><button class="btn btn-primary">Редактировать</button></a>
+                    @can('users delete')
+                        <a href=""><button class="btn btn-danger">Удалить</button></a>
+                    @endcan
+                    @can('users edit')
+                            <a href="{{ route('users.edit', $user) }}"><button class="btn btn-primary">Редактировать</button></a>
+                    @endcan
                 </td>
             </tr>
         @endforeach

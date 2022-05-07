@@ -63,4 +63,9 @@ class User extends Authenticatable implements HasMedia
     {
         return $this->belongsTo(Role::class);
     }
+
+    public function hasPermission($code)
+    {
+        return $this->role->permissions->contains(fn(Permission $permission) => $permission->code == $code);
+    }
 }

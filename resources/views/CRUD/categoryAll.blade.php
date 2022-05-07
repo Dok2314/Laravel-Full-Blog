@@ -21,8 +21,12 @@
                 <td>{{ $category->description }}</td>
                 <td>{{ $category->created_at }}</td>
                 <td style="text-align: center">
-                    <a href="{{ route('CRUD.categoryDelete', $category->id) }}"><button class="btn btn-danger">Удалить</button></a>
-                    <a href="{{ route('CRUD.categoryPreview', $category->id) }}"><button class="btn btn-primary">Редактировать</button></a>
+                    @can('category edit')
+                        <a href="{{ route('CRUD.categoryPreview', $category->id) }}"><button class="btn btn-primary">Редактировать</button></a>
+                    @endcan
+                    @can('category delete')
+                            <a href="{{ route('CRUD.categoryDelete', $category->id) }}"><button class="btn btn-danger">Удалить</button></a>
+                    @endcan
                 </td>
             </tr>
         @endforeach

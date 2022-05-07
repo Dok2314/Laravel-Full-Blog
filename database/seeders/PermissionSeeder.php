@@ -15,6 +15,10 @@ class PermissionSeeder extends Seeder
     public function run()
     {
         Permission::create([
+            'name' => 'Создавать категории',
+            'code' => 'category create'
+        ]);
+        Permission::create([
             'name' => 'Просматривать категории',
             'code' => 'category view'
         ]);
@@ -28,6 +32,10 @@ class PermissionSeeder extends Seeder
         ]);
 
         Permission::create([
+            'name' => 'Создавать записи',
+            'code' => 'post create'
+        ]);
+        Permission::create([
             'name' => 'Просматривать записи',
             'code' => 'post view'
         ]);
@@ -38,6 +46,40 @@ class PermissionSeeder extends Seeder
         Permission::create([
             'name' => 'Удалять записи',
             'code' => 'post delete'
+        ]);
+
+        Permission::create([
+            'name' => 'Создавать юзера',
+            'code' => 'users create'
+        ]);
+        Permission::create([
+            'name' => 'Просматривать юзера',
+            'code' => 'users view'
+        ]);
+        Permission::create([
+            'name' => 'Редактировать юзера',
+            'code' => 'users edit'
+        ]);
+        Permission::create([
+            'name' => 'Удалять юзера',
+            'code' => 'users delete'
+        ]);
+
+        Permission::create([
+            'name' => 'Создавать роль',
+            'code' => 'role create'
+        ]);
+        Permission::create([
+            'name' => 'Просматривать роль',
+            'code' => 'role view'
+        ]);
+        Permission::create([
+            'name' => 'Редактировать роль',
+            'code' => 'role edit'
+        ]);
+        Permission::create([
+            'name' => 'Удалять роль',
+            'code' => 'role delete'
         ]);
     }
 }

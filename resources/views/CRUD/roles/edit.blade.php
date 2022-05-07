@@ -14,10 +14,11 @@
                 <h3>{{ ucfirst($name) }}</h3>
                 @foreach($items as $permission)
                     <input type="checkbox"
+                           id="{{ $permission->name }}"
                            name="permissions[]"
                            value="{{ $permission->id }}"
                         {{ $role->permissions->contains($permission) ? 'checked' : '' }}
-                    >{{ $permission->name }}<br>
+                    ><label for="{{ $permission->name }}">{{ $permission->name }}</label><br>
                 @endforeach
             @endforeach
             <button class="btn btn-primary mt-3">Сохранить</button>
