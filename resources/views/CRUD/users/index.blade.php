@@ -10,6 +10,7 @@
         <tr>
             <th scope="col">ID</th>
             <th scope="col">Имя</th>
+            <th scope="col">Роль</th>
             <th scope="col">E-Mail</th>
             <th scope="col">Дата Создания</th>
             <th scope="col" style="text-align: center">Действие</th>
@@ -20,6 +21,7 @@
             <tr>
                 <th scope="row">{{ $user->id }}</th>
                 <td>{{ $user->name }}</td>
+                <td>{{ $user->role->name }}</td>
                 <td>{{ $user->email }}</td>
                 <td>{{ $user->created_at }}</td>
                 <td style="text-align: center">

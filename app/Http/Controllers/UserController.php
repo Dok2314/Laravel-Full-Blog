@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UpdateUserRequest;
 use App\Http\Requests\UserRequest;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
@@ -18,7 +19,8 @@ class UserController extends Controller
 
     public function create()
     {
-        return view('CRUD.users.create');
+        $roles = Role::all();
+        return view('CRUD.users.create', compact('roles'));
     }
 
     public function store(UserRequest $request)
@@ -26,7 +28,8 @@ class UserController extends Controller
         $user = new User([
             'name' => $request->input('name'),
             'email' => $request->input('email'),
-            'password' => Hash::make($request->input('password'))
+            'password' => Hash::make($request->input('password')),
+            'role_id'  => $request->input('role_id')
         ]);
 
         $user->save();
@@ -44,7 +47,7 @@ class UserController extends Controller
         return view('CRUD.users.edit', compact('user', 'roles'));
     }
 
-    public function update(User $user, UserRequest $request)
+    public function update(User $user, UpdateUserRequest $request)
     {
         $user->name = $request->input('name');
         $user->email = $request->input('email');

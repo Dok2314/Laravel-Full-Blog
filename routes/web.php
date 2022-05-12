@@ -90,3 +90,33 @@ Route::group(['prefix' => 'users', 'as' => 'users.'], function () {
         Route::delete('/', [C\UserController::class, 'destroy'])->name('delete');
     });
 });
+
+Route::group(['prefix' => 'articles', 'as' => 'articles.'], function (){
+   Route::get('/', [C\ArticlesController::class, 'index'])
+       ->name('index');
+   Route::get('create', [C\ArticlesController::class, 'create'])
+       ->name('create');
+   Route::post('create', [C\ArticlesController::class, 'store']);
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

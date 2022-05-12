@@ -41,7 +41,7 @@ class RoleSeeder extends Seeder
         tap(Role::create([
             'name' => 'Разработчик'
         ]), function (Role $role) {
-            $role->permissions()->sync(Permission::whereIn('code', [
+            $role->permissions()->syncWithoutDetaching(Permission::whereIn('code', [
                 'category create',
                 'category view',
                 'category edit',
