@@ -15,6 +15,7 @@
 @include('includes.header')
 
 @include('includes.sessionSuccess')
+@include('includes.sessionError')
 
 @yield('content')
 

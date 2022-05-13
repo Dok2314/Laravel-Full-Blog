@@ -7,7 +7,9 @@
 
             <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
                 <li><a href="{{ route('home') }}" class="nav-link px-2 text-secondary">Главная</a></li>
-                <li><a href="{{ route('articles.create') }}" class="nav-link px-2 text-white">Создать статью</a></li>
+                @auth
+                    <li><a href="{{ route('articles.create') }}" class="nav-link px-2 text-white">Создать статью</a></li>
+                @endauth
                 <li><a href="#" class="nav-link px-2 text-white">Pricing</a></li>
                 <li><a href="#" class="nav-link px-2 text-white">FAQs</a></li>
                 <li><a href="#" class="nav-link px-2 text-white">About</a></li>

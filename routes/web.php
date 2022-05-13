@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RegistrationController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers AS C;
+use App\Models AS M;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,7 +18,8 @@ use App\Http\Controllers AS C;
 */
 
 Route::get('/', function (){
-   return view('homePage');
+    $articles = M\Article::paginate(10);
+   return view('homePage', compact('articles'));
 })->name('home');
 
 Route::group(['prefix' => 'authorize', 'middleware' => 'guest', 'as' => 'user.'], function(){
@@ -97,6 +99,15 @@ Route::group(['prefix' => 'articles', 'as' => 'articles.'], function (){
    Route::get('create', [C\ArticlesController::class, 'create'])
        ->name('create');
    Route::post('create', [C\ArticlesController::class, 'store']);
+
+   Route::group(['prefix' => '{article}'], function (){
+       Route::get('edit', [C\ArticlesController::class, 'edit'])
+           ->name('edit');
+       Route::get('preview', [C\ArticlesController::class, 'preview'])
+            ->name('preview');
+       Route::put('edit', [C\ArticlesController::class, 'update']);
+       Route::delete('/',[C\ArticlesController::class, 'destroy']);
+   });
 });
 
 

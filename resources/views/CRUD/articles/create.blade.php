@@ -3,10 +3,7 @@
 @section('title', 'Создание статьи')
 
 @section('content')
-    @php
-        $article = \App\Models\Article::latest('id')->first();
-    @endphp
-    <img src="{{ Storage::disk('images')->url($article->image) }}" alt="wad">
+    <h2 class="alert alert-info" style="text-align: center">Создайте свою статью</h2>
     <div class="form-control">
         <form method="post" class="form-control" enctype="multipart/form-data">
             @csrf
