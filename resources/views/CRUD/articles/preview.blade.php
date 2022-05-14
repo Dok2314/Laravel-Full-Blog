@@ -10,7 +10,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-8">
-                    <img src="{{ Storage::disk('images')->url($article->image) }}">
+                    <img src="{{ Storage::disk('images')->url($article->image) }}" width="500" height="500">
                 </div>
                 <div class="col-md-4">
                     <div class="card-body">
