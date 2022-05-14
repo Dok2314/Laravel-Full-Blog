@@ -115,5 +115,22 @@ class PermissionSeeder extends Seeder
             'name' => 'Удалять категорию статьи',
             'code' => 'category_of_article delete'
         ]);
+
+        Permission::create([
+            'name' => 'Создавать тег',
+            'code' => 'tag create'
+        ]);
+        Permission::create([
+            'name' => 'Просматривать тег',
+            'code' => 'tag view'
+        ]);
+        Permission::create([
+            'name' => 'Редактировать тег',
+            'code' => 'tag edit'
+        ]);
+        Permission::create([
+            'name' => 'Удалять тег',
+            'code' => 'tag delete'
+        ]);
     }
 }

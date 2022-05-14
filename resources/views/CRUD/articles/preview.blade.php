@@ -15,7 +15,7 @@
                 <div class="col-md-4">
                     <div class="card-body">
                         <blockquote class="blockquote mb-0">
-                            <p>Статья: <strong>{{ $article->article }}</strong></p>
+                            <p>Статья: <strong>{{ Str::limit($article->article, 150) }}</strong></p>
                             <footer class="blockquote-footer">
                                 Категория:
                                 <cite title="Source Title" style="color: blue">

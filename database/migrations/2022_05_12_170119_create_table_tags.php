@@ -14,6 +14,7 @@ return new class extends Migration
             Schema::create(self::TABLE_NAME, function (Blueprint $table){
                 $table->id();
                 $table->string('title');
+                $table->string('slug');
                 $table->text('description');
                 $table->softDeletes();
                 $table->timestamps();

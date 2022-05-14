@@ -34,6 +34,9 @@ $name = Auth::user()->name;
                            @can('category_of_article create')
                                <a href="{{ route('category_article.create') }}"><button class="btn btn-info mt-1">Создать категорию статьи</button></a>
                            @endcan
+                           @can('tag create')
+                               <a href="{{ route('tags.create') }}"><button class="btn btn-info mt-1">Создать тег</button></a>
+                           @endcan
                        </div>
                    </div>
                    <div class="col-md-6">
@@ -55,6 +58,9 @@ $name = Auth::user()->name;
                        @endcan
                        @can('category_of_article view')
                            <a href="{{ route('category_article.index') }}"><button class="btn btn-primary mt-1">Категории статей</button></a>
+                       @endcan
+                       @can('tag view')
+                           <a href="{{ route('tags.index') }}"><button class="btn btn-primary mt-1">Теги</button></a>
                        @endcan
                    </div>
                </div>

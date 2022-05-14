@@ -42,7 +42,11 @@ class RoleSeeder extends Seeder
                 'category_of_article create',
                 'category_of_article view',
                 'category_of_article edit',
-                'category_of_article delete'
+                'category_of_article delete',
+                'tag create',
+                'tag view',
+                'tag edit',
+                'tag delete'
             ])->get());
         });
 

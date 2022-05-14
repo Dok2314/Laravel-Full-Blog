@@ -3,9 +3,12 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Article extends Model
 {
+    use SoftDeletes;
+
     protected $table = 'articles';
 
     protected $fillable = [
@@ -18,5 +21,10 @@ class Article extends Model
     public function category()
     {
         return $this->belongsTo(CategoryArticle::class);
+    }
+
+    public function tags()
+    {
+        return $this->belongsToMany(Tag::class);
     }
 }

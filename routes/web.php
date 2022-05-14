@@ -120,7 +120,7 @@ Route::group(['prefix' => 'categories_of_articles', 'as' => 'category_article.']
         ->name('create');
     Route::post('create', [C\CategoryArticleController::class, 'store']);
 
-    Route::get('/category/{slug}', [C\CategoryArticleController::class, 'articlesCategory'])
+    Route::get('/{slug}', [C\CategoryArticleController::class, 'articlesCategory'])
         ->name('articles-category');
 
     Route::group(['prefix' => '{category_article}'], function (){
@@ -132,7 +132,21 @@ Route::group(['prefix' => 'categories_of_articles', 'as' => 'category_article.']
     });
 });
 
+Route::group(['prefix' => 'tags', 'as' => 'tags.'], function (){
+   Route::get('/', [C\TagController::class, 'index'])
+       ->name('index');
+   Route::get('create', [C\TagController::class, 'create'])
+       ->name('create');
+   Route::post('create', [C\TagController::class, 'store']);
 
+   Route::group(['prefix' => '{tag}'], function (){
+      Route::get('edit', [C\TagController::class, 'edit'])
+          ->name('edit');
+      Route::put('edit', [C\TagController::class, 'update']);
+      Route::delete('delete', [C\TagController::class, 'destroy'])
+          ->name('delete');;
+   });
+});
 
 
 
