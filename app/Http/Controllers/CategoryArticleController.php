@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\CategoryArticleRequest;
+use App\Models\Article;
 use App\Models\CategoryArticle;
 
 class CategoryArticleController extends Controller
@@ -62,5 +63,15 @@ class CategoryArticleController extends Controller
            'Категория %s успешно удалена!',
            $categoryArticle->title
         ));
+    }
+
+    public function articlesCategory($slug)
+    {
+        $category = CategoryArticle::where('slug', $slug)->first();
+        $categoryId = $category->id;
+
+        $articles = Article::where('category_id', $categoryId)->get();
+
+        return view('category.index', compact('category','articles'));
     }
 }

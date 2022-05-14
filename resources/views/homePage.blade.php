@@ -9,11 +9,13 @@
             <h4>Категории:</h4>
             <nav>
                 <ul style="display: flex; justify-content: space-between;">
-                    <li style="list-style: none"><a style="text-decoration: none" href="#">Category First</a></li>
-                    <li style="list-style: none"><a style="text-decoration: none" href="#">Category First</a></li>
-                    <li style="list-style: none"><a style="text-decoration: none" href="#">Category Second</a></li>
-                    <li style="list-style: none"><a style="text-decoration: none" href="#">Category Third</a></li>
-                    <li style="list-style: none"><a style="text-decoration: none" href="#">Category Fourth</a></li>
+                    @foreach($categories as $category)
+                    <li style="list-style: none"><a style="text-decoration: none"
+                    href="{{ route('category_article.articles-category', $category->slug) }}"
+                        >{{ $category->title }}
+                        </a>
+                    </li>
+                    @endforeach
                 </ul>
             </nav>
         </div>
@@ -24,6 +26,7 @@
                     <tr>
                         <th scope="col">ID</th>
                         <th scope="col">Название</th>
+                        <th scope="col">Категория</th>
                         <th scope="col">Фото</th>
                         <th scope="col">Статья</th>
                         <th scope="col">Обзор</th>
@@ -34,7 +37,8 @@
                     <tr>
                         <th scope="row">{{ $article->id }}</th>
                         <td>{{ $article->title }}</td>
-                        <td><img src="{{ Storage::disk('images')->url($article->image) }}" width="100" height="100"></td>
+                        <th scope="row">{{ $article->category->title }}</th>
+                        <td><img src="{{ Storage::disk('images')->url($article->image) }}" width="130" height="100"></td>
                         <td>{{ $article->article }}</td>
                         <td><a href="{{ route('articles.preview', $article->id) }}"><button class="btn btn-info">Посмотреть</button></a></td>
                     </tr>

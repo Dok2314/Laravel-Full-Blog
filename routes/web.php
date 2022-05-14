@@ -19,7 +19,9 @@ use App\Models AS M;
 
 Route::get('/', function (){
     $articles = M\Article::paginate(10);
-   return view('homePage', compact('articles'));
+    $categories = M\CategoryArticle::take(6)->get();
+
+   return view('homePage', compact('articles', 'categories'));
 })->name('home');
 
 Route::group(['prefix' => 'authorize', 'middleware' => 'guest', 'as' => 'user.'], function(){
@@ -117,6 +119,9 @@ Route::group(['prefix' => 'categories_of_articles', 'as' => 'category_article.']
     Route::get('create', [C\CategoryArticleController::class, 'create'])
         ->name('create');
     Route::post('create', [C\CategoryArticleController::class, 'store']);
+
+    Route::get('/category/{slug}', [C\CategoryArticleController::class, 'articlesCategory'])
+        ->name('articles-category');
 
     Route::group(['prefix' => '{category_article}'], function (){
         Route::get('edit', [C\CategoryArticleController::class, 'edit'])
