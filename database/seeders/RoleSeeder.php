@@ -34,7 +34,15 @@ class RoleSeeder extends Seeder
                 'role create',
                 'role view',
                 'role edit',
-                'role delete'
+                'role delete',
+                'article create',
+                'article view',
+                'article edit',
+                'article delete',
+                'category_of_article create',
+                'category_of_article view',
+                'category_of_article edit',
+                'category_of_article delete'
             ])->get());
         });
 

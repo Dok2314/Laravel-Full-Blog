@@ -5,9 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\ArticleRequest;
 use App\Http\Requests\ArticleUpdateRequest;
 use App\Models\Article;
-use App\Models\ArticleCategory;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Str;
+use App\Models\CategoryArticle;
 use Auth;
 
 class ArticlesController extends Controller
@@ -15,7 +13,7 @@ class ArticlesController extends Controller
     public function create()
     {
         if(Auth::user()) {
-            $categories = ArticleCategory::all();
+            $categories = CategoryArticle::all();
 
             return view('CRUD.articles.create', compact('categories'));
         }else{
@@ -23,13 +21,12 @@ class ArticlesController extends Controller
         }
     }
 
+    public function index()
+    {
+        $articles = Article::paginate(10);
 
-//    public function index()
-//    {
-//        $articles = Article::paginate(10);
-//
-//        return view('CRUD.articles.index', compact('articles'));
-//    }
+        return view('CRUD.articles.index', compact('articles'));
+    }
 
     public function store(ArticleRequest $request)
     {
@@ -39,8 +36,7 @@ class ArticlesController extends Controller
             'title'       => $request->input('title'),
             'image'       => $path,
             'article'     => $request->input('article'),
-            'category_id' => 1
-//            'category_id' => $request->input('category')
+            'category_id' => $request->input('category')
         ]);
 
         $article->save();
@@ -53,7 +49,7 @@ class ArticlesController extends Controller
 
     public function edit(Article $article)
     {
-        $categories = ArticleCategory::all();
+        $categories = CategoryArticle::all();
 
         return view('CRUD.articles.edit', compact('article','categories'));
     }
@@ -80,7 +76,12 @@ class ArticlesController extends Controller
 
     public function destroy(Article $article)
     {
-        //TODO delete article
+        $article->delete();
+
+        return redirect()->route('articles.index')->with('success', sprintf(
+            'Статья %s успешно удалена!',
+            $article->title
+        ));
     }
 
     public function preview(Article $article)

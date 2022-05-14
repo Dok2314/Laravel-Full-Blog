@@ -31,6 +31,9 @@ $name = Auth::user()->name;
                            @can('role create')
                            <a href="{{ route('roles.create') }}"><button class="btn btn-info mt-1">Создать Роль</button></a>
                            @endcan
+                           @can('category_of_article create')
+                               <a href="{{ route('category_article.create') }}"><button class="btn btn-info mt-1">Создать категорию статьи</button></a>
+                           @endcan
                        </div>
                    </div>
                    <div class="col-md-6">
@@ -41,11 +44,17 @@ $name = Auth::user()->name;
                        @can('post view')
                            <a href="{{ route('post.index') }}"><button class="btn btn-primary">Посты</button></a>
                        @endcan
+                       @can('article view')
+                       <a href="{{ route('articles.index') }}"><button class="btn btn-primary">Статьи</button></a>
+                       @endcan
                        @can('role view')
                            <a href="{{ route('roles.index') }}"><button class="btn btn-primary mt-1">Роли</button></a>
                        @endcan
                        @can('users view')
                            <a href="{{ route('users.index') }}"><button class="btn btn-primary mt-1">Пользователи</button></a>
+                       @endcan
+                       @can('category_of_article view')
+                           <a href="{{ route('category_article.index') }}"><button class="btn btn-primary mt-1">Категории статей</button></a>
                        @endcan
                    </div>
                </div>

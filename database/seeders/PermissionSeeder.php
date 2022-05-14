@@ -81,5 +81,39 @@ class PermissionSeeder extends Seeder
             'name' => 'Удалять роль',
             'code' => 'role delete'
         ]);
+
+        Permission::create([
+            'name' => 'Создавать статью',
+            'code' => 'article create'
+        ]);
+        Permission::create([
+            'name' => 'Просматривать статью',
+            'code' => 'article view'
+        ]);
+        Permission::create([
+            'name' => 'Редактировать статьи',
+            'code' => 'article edit'
+        ]);
+        Permission::create([
+            'name' => 'Удалять статью',
+            'code' => 'article delete'
+        ]);
+
+        Permission::create([
+            'name' => 'Создавать ктегорию статьи',
+            'code' => 'category_of_article create'
+        ]);
+        Permission::create([
+            'name' => 'Просматривать категорию статьи',
+            'code' => 'category_of_article view'
+        ]);
+        Permission::create([
+            'name' => 'Редактировать категорию статьи',
+            'code' => 'category_of_article edit'
+        ]);
+        Permission::create([
+            'name' => 'Удалять категорию статьи',
+            'code' => 'category_of_article delete'
+        ]);
     }
 }

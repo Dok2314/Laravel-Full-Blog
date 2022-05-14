@@ -106,8 +106,25 @@ Route::group(['prefix' => 'articles', 'as' => 'articles.'], function (){
        Route::get('preview', [C\ArticlesController::class, 'preview'])
             ->name('preview');
        Route::put('edit', [C\ArticlesController::class, 'update']);
-       Route::delete('/',[C\ArticlesController::class, 'destroy']);
+       Route::delete('delete',[C\ArticlesController::class, 'destroy'])
+           ->name('delete');
    });
+});
+
+Route::group(['prefix' => 'categories_of_articles', 'as' => 'category_article.'], function (){
+    Route::get('/', [C\CategoryArticleController::class, 'index'])
+        ->name('index');
+    Route::get('create', [C\CategoryArticleController::class, 'create'])
+        ->name('create');
+    Route::post('create', [C\CategoryArticleController::class, 'store']);
+
+    Route::group(['prefix' => '{category_article}'], function (){
+        Route::get('edit', [C\CategoryArticleController::class, 'edit'])
+            ->name('edit');
+        Route::put('edit', [C\CategoryArticleController::class, 'update']);
+        Route::delete('delete', [C\CategoryArticleController::class, 'destroy'])
+            ->name('delete');
+    });
 });
 
 
