@@ -20,8 +20,9 @@ use App\Models AS M;
 Route::get('/', function (){
     $articles = M\Article::paginate(10);
     $categories = M\CategoryArticle::take(6)->get();
+    $tags = M\Tag::all();
 
-   return view('homePage', compact('articles', 'categories'));
+   return view('homePage', compact('articles', 'categories','tags'));
 })->name('home');
 
 Route::group(['prefix' => 'authorize', 'middleware' => 'guest', 'as' => 'user.'], function(){
@@ -139,6 +140,9 @@ Route::group(['prefix' => 'tags', 'as' => 'tags.'], function (){
        ->name('create');
    Route::post('create', [C\TagController::class, 'store']);
 
+   Route::get('/{slug}', [C\TagController::class, 'findArtilces'])
+       ->name('articles');
+
    Route::group(['prefix' => '{tag}'], function (){
       Route::get('edit', [C\TagController::class, 'edit'])
           ->name('edit');
@@ -146,6 +150,11 @@ Route::group(['prefix' => 'tags', 'as' => 'tags.'], function (){
       Route::delete('delete', [C\TagController::class, 'destroy'])
           ->name('delete');;
    });
+});
+
+Route::group(['prefix' => 'comments', 'as' => 'comment.'], function (){
+   Route::post('create', [C\CommentsController::class, 'store'])
+        ->name('create');
 });
 
 

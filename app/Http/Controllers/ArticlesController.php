@@ -6,7 +6,9 @@ use App\Http\Requests\ArticleRequest;
 use App\Http\Requests\ArticleUpdateRequest;
 use App\Models\Article;
 use App\Models\CategoryArticle;
+use App\Models\Comment;
 use Auth;
+use App\Models\Tag;
 
 class ArticlesController extends Controller
 {
@@ -14,8 +16,9 @@ class ArticlesController extends Controller
     {
         if(Auth::user()) {
             $categories = CategoryArticle::all();
+            $tags = Tag::all();
 
-            return view('CRUD.articles.create', compact('categories'));
+            return view('CRUD.articles.create', compact('categories','tags'));
         }else{
             return  redirect()->route('home')->with('error','Для начала авторизируйтесь');
         }
@@ -41,6 +44,8 @@ class ArticlesController extends Controller
 
         $article->save();
 
+        $article->tags()->sync($request->tags);
+
         return redirect()->route('articles.edit', $article)->with('success', sprintf(
            'Сатья %s успешно создана!',
            $article->title
@@ -50,8 +55,9 @@ class ArticlesController extends Controller
     public function edit(Article $article)
     {
         $categories = CategoryArticle::all();
+        $tags = Tag::all();
 
-        return view('CRUD.articles.edit', compact('article','categories'));
+        return view('CRUD.articles.edit', compact('article','categories','tags'));
     }
 
     public function update(Article $article, ArticleUpdateRequest $request)
@@ -65,6 +71,7 @@ class ArticlesController extends Controller
 
         $article->article = $request->input('article');
         $article->category_id = $request->input('category');
+        $article->tags()->sync($request->input('tags'));
 
         $article->save();
 
@@ -86,6 +93,12 @@ class ArticlesController extends Controller
 
     public function preview(Article $article)
     {
-        return view('CRUD.articles.preview', compact('article'));
+        $tags = $article->tags()->get();
+        $article_id = $article->id;
+        $comments = Comment::where('article_id', $article_id)
+            ->orderBy('created_at','DESC')
+            ->paginate(5);
+
+        return view('CRUD.articles.preview', compact('article','tags','comments'));
     }
 }

@@ -8,7 +8,7 @@
             @csrf
             <div class="form-group mt-3">
                 <label for="title">Тег</label>
-                <input type="text" name="title" id="title" value="{{ old('title') }}" class="form-control">
+                <input type="text" name="title" id="title" value="#{{ old('title') }}" class="form-control">
             </div>
             @error('title')
             <div class="alert alert-danger">

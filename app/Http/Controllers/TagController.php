@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\TagRequest;
+use App\Models\Article;
 use App\Models\Tag;
 
 class TagController extends Controller
@@ -62,5 +63,17 @@ class TagController extends Controller
             'Тег %s был успешно удален!',
             $tag->title
         ));
+    }
+
+    public  function findArtilces($slug)
+    {
+        $tag = Tag::where('slug', $slug)->first();
+        $articles = Article::whereHas('tags', function ($query) use($tag){
+            $query->where('slug', $tag->slug);
+        })
+        ->orderBy('created_at', 'DESC')
+        ->get();
+
+        return view('tag.index', compact('articles', 'tag'));
     }
 }

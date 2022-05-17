@@ -55,6 +55,16 @@
                 {{ $message }}
             </div>
             @enderror
+            <div class="form-group mt-3">
+                @foreach($tags as $tag)
+                    <input type="checkbox"
+                           id="{{ $tag->title }}"
+                           name="tags[]"
+                           value="{{ $tag->id }}"
+                        {{ $article->tags->contains($tag) ? 'checked' : '' }}
+                    ><label for="{{ $tag->title }}">{{ $tag->title }}</label><br>
+                @endforeach
+            </div>
             <button class="btn btn-primary mt-3">Сохранить</button>
         </form>
     </div>

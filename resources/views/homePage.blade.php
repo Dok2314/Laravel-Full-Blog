@@ -50,7 +50,14 @@
                 </div>
             </div>
             <div class="col-md-3">
-                Теги
+                <h4>Выберите статью по тегу:</h4>
+                    <nav>
+                        <ul style="">
+                            @foreach($tags as $tag)
+                                <li><a href="{{ route('tags.articles', $tag->slug) }}">{{ $tag->title }}</a></li>
+                            @endforeach
+                        </ul>
+                    </nav>
             </div>
         </div>
     </div>

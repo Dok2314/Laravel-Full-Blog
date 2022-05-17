@@ -47,6 +47,15 @@
                 {{ $message }}
             </div>
             @enderror
+            <div class="form-group mt-3">
+                @foreach($tags as $tag)
+                    <input type="checkbox"
+                           id="{{ $tag->title }}"
+                           name="tags[]"
+                           value="{{ $tag->id }}"
+                    ><label for="{{ $tag->title }}">{{ $tag->title }}</label><br>
+                @endforeach
+            </div>
             <button type="submit" class="btn btn-primary mt-3">Создать</button>
         </form>
     </div>
