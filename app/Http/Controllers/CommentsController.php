@@ -25,7 +25,7 @@ class CommentsController extends Controller
 
         if(!isset($user)){
             $executed = RateLimiter::attempt(
-                'comment:',
+                'comment:' . $request->ip(),
                  1,
                 function() use($comment){
                     $comment->save();

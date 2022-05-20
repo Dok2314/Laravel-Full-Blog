@@ -44,7 +44,7 @@ Route::group(['prefix' => 'authorize', 'as' => 'user.'], function(){
         return redirect(route('home'));
     })->name('logout');
 
-   Route::post('/registration',[RegistrationController::class, 'registration']);
+   Route::post('/registration',[RegistrationController::class, 'registration'])->middleware('throttle:2,1');
    Route::post('/login',[LoginController::class, 'login']);
 });
 
@@ -140,15 +140,15 @@ Route::group(['prefix' => 'tags', 'as' => 'tags.'], function (){
        ->name('create');
    Route::post('create', [C\TagController::class, 'store']);
 
-   Route::get('/{slug}', [C\TagController::class, 'findArtilces'])
-       ->name('articles');
+    Route::get('/{tag:slug}', [C\TagController::class, 'findArticlesBySlug'])
+        ->name('articles');
 
    Route::group(['prefix' => '{tag}'], function (){
       Route::get('edit', [C\TagController::class, 'edit'])
           ->name('edit');
       Route::put('edit', [C\TagController::class, 'update']);
       Route::delete('delete', [C\TagController::class, 'destroy'])
-          ->name('delete');;
+          ->name('delete');
    });
 });
 

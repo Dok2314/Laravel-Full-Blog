@@ -16,29 +16,29 @@ class LoginController extends Controller
 
     public function login(LoginRequest $request)
     {
-        $email = $request->email;
-        $user = User::where('email', $email)->first();
-        $name = $user->name ?? '';
+        $maxAttempts = 2;
+        $rateLimiterKey = 'login:' . $request->ip();
 
-        $executed = RateLimiter::attempt(
-            'login:'.$user->id,
-            5,
-            function() use($request, $name){
-                if(Auth::attempt($request->only(['email', 'password']), $request->input('remember'))) {
-                    return redirect()->route('user.admin')->with('success', sprintf(
-                        'С возвращением %s',
-                        $name
-                    ));
-                }
-            },
-        120);
+        if (RateLimiter::tooManyAttempts($rateLimiterKey, $maxAttempts)) {
+            return back()->withErrors([
+                'email' => sprintf('Слишком много попыток за минуту! Повторите через %d сек.',
+                    RateLimiter::availableIn($rateLimiterKey)
+                )
+            ]);
+        }
 
-        if (! $executed) {
-            return back()->with('error', 'Слишком много попыток, подождите 2 минуты!');
+        RateLimiter::hit($rateLimiterKey);
+
+        if (Auth::attempt($request->only(['email', 'password']), $request->input('remember'))) {
+            $user = Auth::user();
+            return redirect()->route('user.admin')->with('success', sprintf(
+                'Пользователь %s успешно добавлен!',
+                $user->name
+            ));
         }
 
         return back()->withErrors([
-           'email' => 'Неверные данные, повторите попытку.'
+            'email' => 'Неверный адрес или пароль! У вас осталось попыток: ' . RateLimiter::remaining($rateLimiterKey, $maxAttempts)
         ]);
     }
 }

@@ -23,16 +23,16 @@ class TagController extends Controller
     public function store(TagRequest $request)
     {
         $tag = new Tag([
-            'title'       => $request->input('title'),
-            'slug'        => $request->input('title'),
+            'title' => $request->input('title'),
+            'slug' => $request->input('title'),
             'description' => $request->input('description'),
         ]);
 
         $tag->save();
 
         return redirect()->route('tags.edit', $tag)->with('success', sprintf(
-           'Тег %s успешно добавлен',
-           $tag->title
+            'Тег %s успешно добавлен',
+            $tag->title
         ));
     }
 
@@ -44,14 +44,14 @@ class TagController extends Controller
     public function update(Tag $tag, TagRequest $request)
     {
         $tag->title = $request->input('title');
-        $tag->slug  = $request->input('title');
+        $tag->slug = $request->input('title');
         $tag->description = $request->input('description');
 
         $tag->save();
 
         return redirect()->route('tags.index')->with('success', sprintf(
-           'Тег %s успешно обновлен!',
-           $tag->title
+            'Тег %s успешно обновлен!',
+            $tag->title
         ));
     }
 
@@ -65,14 +65,14 @@ class TagController extends Controller
         ));
     }
 
-    public  function findArtilces($slug)
+    public function findArticlesBySlug(Tag $tag)
     {
-        $tag = Tag::where('slug', $slug)->first();
-        $articles = Article::whereHas('tags', function ($query) use($tag){
-            $query->where('slug', $tag->slug);
-        })
-        ->orderBy('created_at', 'DESC')
-        ->get();
+        $articles = Article::query()
+            ->whereHas('tags', function ($query) use ($tag) {
+                $query->where('slug', $tag->slug);
+            })
+            ->orderBy('created_at', 'DESC')
+            ->get();
 
         return view('tag.index', compact('articles', 'tag'));
     }

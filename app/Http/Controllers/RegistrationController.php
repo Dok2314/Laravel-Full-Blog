@@ -4,10 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\RegistrationRequest;
 use Illuminate\Auth\Events\Registered;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\RateLimiter;
 
 class RegistrationController extends Controller
 {
@@ -21,7 +21,7 @@ class RegistrationController extends Controller
         $validatedFields = $request->all();
 
         event(new Registered(
-           $user = $this->create($validatedFields)
+            $user = $this->create($validatedFields)
         ));
 
         if($request->has('avatar')) {
