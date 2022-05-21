@@ -23,34 +23,35 @@ class CommentsController extends Controller
             'article_id' => $article_id
         ]);
 
-        if(!isset($user)){
-            $executed = RateLimiter::attempt(
-                'comment:' . $request->ip(),
-                 1,
-                function() use($comment){
-                    $comment->save();
-                },
-            600);
+        $guestRateLimiterKey = 'comment:'.$request->ip();
+        $guestMaxAttempts = 1;
+        $authMaxAttempts = 5;
+        $guestBlock = 600;
+        $authBlock = 60;
 
-            if (!$executed) {
-                return back()->with('error', 'Авторизуйтесь чтобы отправлять более 1 коментария в 10 минут!');
+        if(!isset($user)) {
+            if(RateLimiter::tooManyAttempts($guestRateLimiterKey, $guestMaxAttempts)){
+                return redirect()->route('articles.preview', $article)->with('error', sprintf(
+                    'Ошибка! Слишком много попыток в минуту! Осталось ждать: %d сек.',
+                    RateLimiter::availableIn($guestRateLimiterKey)
+                ));
             }
+            RateLimiter::hit($guestRateLimiterKey, $guestBlock);
         }else{
-            $executed = RateLimiter::attempt(
-                'comment:'.$user->id,
-                5,
-                function() use($comment){
-                    $comment->save();
-                },
-                60);
-
-            if (!$executed) {
-                return back()->with('error', 'Можно отправить только 5 коментариев за 1 минуту!');
+            $authUserRateLimiterKey = 'comment:'.$user->id;
+            if(RateLimiter::tooManyAttempts($authUserRateLimiterKey,$authMaxAttempts)){
+                return redirect()->route('articles.preview', $article)->with('error', sprintf(
+                    'Ошибка! Слишком много попыток в минуту! Осталось ждать: %d сек.',
+                    RateLimiter::availableIn($authUserRateLimiterKey)
+                ));
             }
+            RateLimiter::hit($authUserRateLimiterKey, $authBlock);
         }
 
+        $comment->save();
+
         return redirect()->route('articles.preview', $article)->with('success', sprintf(
-            'Коментарий успешно добавлен!',
+            'Коментарий %s успешно добавлен!',
             $comment->title
         ));
     }

@@ -37,8 +37,16 @@ class LoginController extends Controller
             ));
         }
 
-        return back()->withErrors([
-            'email' => 'Неверный адрес или пароль! У вас осталось попыток: ' . RateLimiter::remaining($rateLimiterKey, $maxAttempts)
-        ]);
+        $latest = RateLimiter::remaining($rateLimiterKey, $maxAttempts);
+
+        if($latest > 0){
+            return back()->withErrors([
+                'email' => 'Неверный адрес или пароль! У вас осталось попыток: ' . $latest
+            ]);
+        }else{
+            return back()->withErrors([
+                'email' => 'Неверный адрес или пароль! У вас осталось последняя попытка!'
+            ]);
+        }
     }
 }

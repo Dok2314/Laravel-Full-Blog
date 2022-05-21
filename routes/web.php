@@ -44,7 +44,8 @@ Route::group(['prefix' => 'authorize', 'as' => 'user.'], function(){
         return redirect(route('home'));
     })->name('logout');
 
-   Route::post('/registration',[RegistrationController::class, 'registration'])->middleware('throttle:2,1');
+   Route::post('/registration',[RegistrationController::class, 'registration'])
+       ->middleware('throttle:2,1');
    Route::post('/login',[LoginController::class, 'login']);
 });
 
