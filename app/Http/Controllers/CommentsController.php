@@ -7,6 +7,7 @@ use App\Models\Article;
 use App\Models\Comment;
 use Auth;
 use Illuminate\Support\Facades\RateLimiter;
+use App\Http\Requests\LikeRequest;
 
 class CommentsController extends Controller
 {
@@ -58,5 +59,14 @@ class CommentsController extends Controller
                 $leave
             )
         );
+    }
+
+    public function like(Article $article)
+    {
+        $user = Auth::user();
+
+        $user->likes()->toggle($article->id);
+
+        return redirect()->route('articles.preview', $article);
     }
 }

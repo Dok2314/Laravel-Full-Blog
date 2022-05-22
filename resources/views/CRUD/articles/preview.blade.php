@@ -39,9 +39,19 @@
                     <div class="col-md-8">
                         <h4>Статья показалась вам полезной?</h4>
                         <span>
-                            <strong style="color: green">
-                                Like?(251)
-                            </strong>
+                            <form action="{{ route('like.like', $article) }}" method="post">
+                                @csrf
+                                    <button type="submit"
+                                            class="border-0 bg-transparent"
+                                            style="color:
+                                        @auth
+                                            {{ Auth::user()->likes->contains($article->id) ? 'red' : 'silver' }}
+                                            @endauth
+                                                ">
+                                        <b>Like? ({{ $article->users->count() }})</b>
+                                        <i class="fa-solid fa-heart"></i>
+                                    </button>
+                            </form>
                         </span>
                         <h4 class="mb-4">Оставьте свой коментарий</h4>
                         <form action="{{ route('comment.create') }}" method="post" class="form-control">

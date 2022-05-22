@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Models\Like;
 
 class Article extends Model
 {
@@ -15,7 +16,8 @@ class Article extends Model
         'title',
         'image',
         'article',
-        'category_id'
+        'category_id',
+        'likes_count'
     ];
 
     public function category()
@@ -26,5 +28,9 @@ class Article extends Model
     public function tags()
     {
         return $this->belongsToMany(Tag::class,'articles_tags');
+    }
+
+    public function users(){
+        return $this->belongsToMany(User::class, 'article_user_likes');
     }
 }

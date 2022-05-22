@@ -11,6 +11,7 @@ use Illuminate\Support\Traits\Tappable;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
+use App\Models\Like;
 
 class User extends Authenticatable implements HasMedia
 {
@@ -69,5 +70,9 @@ class User extends Authenticatable implements HasMedia
     public function hasPermission($code)
     {
         return $this->role->permissions->contains(fn(Permission $permission) => $permission->code == $code);
+    }
+
+    public function likes(){
+        return $this->belongsToMany(Article::class, 'article_user_likes');
     }
 }

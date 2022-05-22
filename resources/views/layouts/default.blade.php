@@ -22,5 +22,6 @@
 @include('includes.footer')
 {{--FOOTER--}}
 @stack('scripts')
+<script src="https://kit.fontawesome.com/8c07973f2e.js" crossorigin="anonymous"></script>
 </body>
 </html>

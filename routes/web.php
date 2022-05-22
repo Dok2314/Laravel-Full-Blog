@@ -158,3 +158,9 @@ Route::group(['prefix' => 'comments', 'as' => 'comment.'], function (){
         ->name('create');
 });
 
+Route::group(['prefix' => 'likes', 'middleware' => 'auth', 'as' => 'like.'], function(){
+    Route::group(['prefix' => '{article}'], function (){
+        Route::post('/like', [C\CommentsController::class, 'like'])
+            ->name('like');
+    });
+});
