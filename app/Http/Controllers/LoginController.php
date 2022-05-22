@@ -16,37 +16,35 @@ class LoginController extends Controller
 
     public function login(LoginRequest $request)
     {
-        $maxAttempts = 2;
-        $rateLimiterKey = 'login:' . $request->ip();
+        $rateLimiterKey = $request->input('email') . '|' . $request->ip();
 
-        if (RateLimiter::tooManyAttempts($rateLimiterKey, $maxAttempts)) {
-            return back()->withErrors([
-                'email' => sprintf('Слишком много попыток за минуту! Повторите через %d сек.',
-                    RateLimiter::availableIn($rateLimiterKey)
-                )
-            ]);
+        if (RateLimiter::tooManyAttempts($rateLimiterKey, 3)) {
+            return back()->with('error', sprintf(
+                'Слишком много попыток! Подождите %d сек.',
+                RateLimiter::availableIn($rateLimiterKey)
+            ));
         }
 
-        RateLimiter::hit($rateLimiterKey);
-
-        if (Auth::attempt($request->only(['email', 'password']), $request->input('remember'))) {
+        if (Auth::attempt($request->only(['email', 'password']), $request->boolean('remember'))) {
             $user = Auth::user();
+
+            RateLimiter::clear($rateLimiterKey);
+
             return redirect()->route('user.admin')->with('success', sprintf(
-                'Пользователь %s успешно добавлен!',
+                'С возвращением %s',
                 $user->name
             ));
         }
 
-        $latest = RateLimiter::remaining($rateLimiterKey, $maxAttempts);
+        RateLimiter::hit($rateLimiterKey, 60);
+        $leave = RateLimiter::remaining($rateLimiterKey, 3);
 
-        if($latest > 0){
-            return back()->withErrors([
-                'email' => 'Неверный адрес или пароль! У вас осталось попыток: ' . $latest
-            ]);
-        }else{
-            return back()->withErrors([
-                'email' => 'Неверный адрес или пароль! У вас осталось последняя попытка!'
-            ]);
-        }
+        return back()->with('error', $leave > 0
+            ? sprintf(
+                'Неверные данные! Осталось попыток: %d!',
+                $leave
+            )
+            : 'Последняя попытка!'
+        );
     }
 }

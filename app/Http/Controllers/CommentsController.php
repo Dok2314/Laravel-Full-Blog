@@ -23,36 +23,40 @@ class CommentsController extends Controller
             'article_id' => $article_id
         ]);
 
-        $guestRateLimiterKey = 'comment:'.$request->ip();
-        $guestMaxAttempts = 1;
-        $authMaxAttempts = 5;
-        $guestBlock = 600;
-        $authBlock = 60;
-
-        if(!isset($user)) {
-            if(RateLimiter::tooManyAttempts($guestRateLimiterKey, $guestMaxAttempts)){
-                return redirect()->route('articles.preview', $article)->with('error', sprintf(
-                    'Ошибка! Слишком много попыток в минуту! Осталось ждать: %d сек.',
-                    RateLimiter::availableIn($guestRateLimiterKey)
-                ));
-            }
-            RateLimiter::hit($guestRateLimiterKey, $guestBlock);
+        if($user) {
+            $rateLimiterKey = 'comment:' . $user->id;
+            $maxAttempts = 5;
+            $block = 60;
         }else{
-            $authUserRateLimiterKey = 'comment:'.$user->id;
-            if(RateLimiter::tooManyAttempts($authUserRateLimiterKey,$authMaxAttempts)){
-                return redirect()->route('articles.preview', $article)->with('error', sprintf(
-                    'Ошибка! Слишком много попыток в минуту! Осталось ждать: %d сек.',
-                    RateLimiter::availableIn($authUserRateLimiterKey)
-                ));
-            }
-            RateLimiter::hit($authUserRateLimiterKey, $authBlock);
+            $rateLimiterKey = 'comment:' . $request->ip();
+            $maxAttempts = 1;
+            $block = 600;
         }
+
+        if(RateLimiter::tooManyAttempts($rateLimiterKey, $maxAttempts)) {
+            return redirect()->route('articles.preview', $article)->with('error',sprintf(
+               'Слишком много попыток! Подождите %d сек.',
+                RateLimiter::availableIn($rateLimiterKey)
+            ));
+        }
+
+        RateLimiter::hit($rateLimiterKey, $block);
 
         $comment->save();
 
-        return redirect()->route('articles.preview', $article)->with('success', sprintf(
-            'Коментарий %s успешно добавлен!',
-            $comment->title
-        ));
+        $leave = RateLimiter::remaining($rateLimiterKey, $maxAttempts);
+
+        return redirect()->route('articles.preview', $article)->with('success', $leave > 0
+            ? sprintf(
+                'Коментарий %s успешно добавлен!Вы можите добавить ещё %d!',
+                $comment->title,
+                $leave
+            ) :
+            sprintf(
+                'Коментарий %s успешно добавлен! Осталась последняя попытка!',
+                $comment->title,
+                $leave
+            )
+        );
     }
 }

@@ -158,22 +158,3 @@ Route::group(['prefix' => 'comments', 'as' => 'comment.'], function (){
         ->name('create');
 });
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
