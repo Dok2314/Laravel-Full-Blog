@@ -94,6 +94,8 @@ Route::group(['prefix' => 'users', 'as' => 'users.'], function () {
         Route::get('edit', [C\UserController::class, 'edit'])->name('edit');
         Route::put('edit', [C\UserController::class, 'update']);
         Route::delete('/', [C\UserController::class, 'destroy'])->name('delete');
+        Route::get('preview', [C\UserController::class, 'preview'])
+            ->name('user_preview');
     });
 });
 
@@ -163,4 +165,14 @@ Route::group(['prefix' => 'likes', 'middleware' => 'auth', 'as' => 'like.'], fun
         Route::post('/like', [C\CommentsController::class, 'like'])
             ->name('like');
     });
+});
+
+Route::group(['prefix' => 'search', 'as' => 'search.', 'middleware' => 'auth'], function(){
+    Route::post('/article', [C\ArticlesController::class, 'search'])
+        ->name('search');
+});
+
+Route::group(['prefix' => 'search', 'as' => 'Usersearch.', 'middleware' => 'auth'], function(){
+    Route::post('/user', [C\UserController::class, 'search'])
+        ->name('search');
 });

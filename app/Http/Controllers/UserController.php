@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\UpdateUserRequest;
 use App\Http\Requests\UserRequest;
+use App\Http\Requests\UserSearchRequest;
+use App\Models\Article;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use App\Models\Role;
@@ -59,5 +61,19 @@ class UserController extends Controller
         $user->save();
 
         return back();
+    }
+
+    public function search(UserSearchRequest $request)
+    {
+        $search = $request->input('user_search');
+        $results = User::where('name', 'like', '%' . $search . '%')
+            ->get();
+
+        return view('search.user', compact('results'));
+    }
+
+    public function preview(User $user)
+    {
+        return view('CRUD.users.userPreview', compact('user'));
     }
 }

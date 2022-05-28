@@ -9,6 +9,7 @@ use App\Models\CategoryArticle;
 use App\Models\Comment;
 use Auth;
 use App\Models\Tag;
+use App\Http\Requests\SearchRequest;
 
 class ArticlesController extends Controller
 {
@@ -100,5 +101,14 @@ class ArticlesController extends Controller
             ->paginate(5);
 
         return view('CRUD.articles.preview', compact('article','tags','comments'));
+    }
+
+    public function search(SearchRequest $request)
+    {
+        $search  = $request->input('search');
+        $results = Article::where('title', 'like', '%' . $search . '%')
+            ->get();
+
+        return view('search.index', compact('results'));
     }
 }

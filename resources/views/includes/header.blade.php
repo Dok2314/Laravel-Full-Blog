@@ -15,8 +15,35 @@
                 <li><a href="#" class="nav-link px-2 text-white">About</a></li>
             </ul>
 
-            <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
-                <input type="search" class="form-control form-control-dark" placeholder="Search..." aria-label="Search">
+            <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" method="post" action="{{ route('search.search') }}">
+                @csrf
+                <input type="search"
+                       class="form-control form-control-dark"
+                       placeholder="Найти статью..."
+                       aria-label="Search"
+                        name="search"
+                >
+                @error('search')
+                <div class="alert alert-danger">
+                    {{ $message }}
+                </div>
+                @enderror
+                <button type="submit" class="btn btn-info mt-2">Поиск</button>
+            </form>
+            <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" method="post" action="{{ route('Usersearch.search') }}">
+                @csrf
+                <input type="search"
+                       class="form-control form-control-dark"
+                       placeholder="Найти пользователя..."
+                       aria-label="Search"
+                       name="user_search"
+                >
+                @error('user_search')
+                <div class="alert alert-danger">
+                    {{ $message }}
+                </div>
+                @enderror
+                <button type="submit" class="btn btn-info mt-2">Поиск</button>
             </form>
 
             <div class="text-end">
