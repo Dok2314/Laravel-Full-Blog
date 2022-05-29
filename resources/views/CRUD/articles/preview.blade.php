@@ -79,7 +79,7 @@
                         </form>
                     </div>
                     <div class="col-md-4">
-                        <h4>Мнения пользователей о статье <strong style="color: green;">"{{ $article->title }}"</strong>:</h4>
+                        <h4>Всего коментариев статьи: <strong style="color: green;">"{{ $article->title }}"</strong>({{ $comments->count() }} ком.):</h4>
                         @foreach($comments as $comment)
                         <div class="card text-center  mt-3">
                             <div class="card-header">
@@ -90,8 +90,13 @@
                             </div>
                             <div class="card-footer text-muted">
                                 Коментарий оставлен: {{ $comment->created_at }} <br>
-                                Пользователем:
+                                Пользователем: @if($comment->user_id == 0)
+                                    <b>Аноним</b>
+                                @else
+                                    <b>{{ $comment->user->name }}</b>
+                                @endif
                             </div>
+                            <a href="">Коментировать</a>
                         </div>
                         @endforeach
                         <div class="mt-3">
@@ -103,3 +108,9 @@
         </div>
     </div>
 @endsection
+@push('links')
+    <link rel="stylesheet" href="{{ asset('css/comment.css') }}">
+@endpush
+@push('scripts')
+    <script src="{{ asset('js/comment.js') }}"></script>
+@endpush
