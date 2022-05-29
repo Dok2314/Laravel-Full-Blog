@@ -17,6 +17,8 @@ return new class extends Migration
                 $table->string('slug');
                 $table->text('comment');
                 $table->foreignId('article_id')->constrained('articles')->cascadeOnUpdate()->cascadeOnDelete();
+                $table->foreignId('user_id')->nullable()->constrained('users')->cascadeOnUpdate()->cascadeOnDelete();
+                $table->foreignId('parent_id')->nullable()->constrained(self::TABLE_NAME)->cascadeOnUpdate()->cascadeOnDelete();
                 $table->softDeletes();
                 $table->timestamps();
             });

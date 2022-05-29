@@ -40,7 +40,8 @@ class ArticlesController extends Controller
             'title'       => $request->input('title'),
             'image'       => $path,
             'article'     => $request->input('article'),
-            'category_id' => $request->input('category')
+            'category_id' => $request->input('category'),
+            'user_id'     => Auth::user()->id
         ]);
 
         $article->save();
@@ -99,6 +100,7 @@ class ArticlesController extends Controller
         $comments = Comment::where('article_id', $article_id)
             ->orderBy('created_at','DESC')
             ->paginate(5);
+
 
         return view('CRUD.articles.preview', compact('article','tags','comments'));
     }

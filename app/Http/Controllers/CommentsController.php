@@ -21,7 +21,9 @@ class CommentsController extends Controller
             'title' => $request->input('title'),
             'slug' => $request->input('title'),
             'comment' => $request->input('comment'),
-            'article_id' => $article_id
+            'article_id' => $article_id,
+            'parent_id' => $request->input('parent_id'),
+            'user_id' => $user->id ?? NULL
         ]);
 
         if($user) {

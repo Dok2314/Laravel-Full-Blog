@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use App\Models\Like;
+use App\Models\Comment;
 
 class Article extends Model
 {
@@ -17,6 +17,7 @@ class Article extends Model
         'image',
         'article',
         'category_id',
+        'user_id',
         'likes_count'
     ];
 
@@ -32,5 +33,15 @@ class Article extends Model
 
     public function users(){
         return $this->belongsToMany(User::class, 'article_user_likes');
+    }
+
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
+
+    public function commentsWithoutParent()
+    {
+        return $this->hasMany(Comment::class)->whereNull('parent_id');
     }
 }

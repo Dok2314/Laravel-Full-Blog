@@ -54,51 +54,45 @@
                             </form>
                         </span>
                         <h4 class="mb-4">Оставьте свой коментарий</h4>
-                        <form action="{{ route('comment.create') }}" method="post" class="form-control">
-                            @csrf
-                            <input type="hidden" name="article_id" value="{{ $article->id }}">
-                            <div class="form-group mt-3">
-                                <label for="title" class="mb-3">Название Коментария</label>
-                                <input type="text" name="title" id="title" placeholder="Введите название" value="{{ old('title') }}" class="form-control">
-                            </div>
-                            @error('title')
-                                <div class="alert alert-danger">
-                                    {{ $message }}
-                                </div>
-                            @enderror
-                            <div class="form-group mt-3">
-                                <label for="comment" class="mb-3">Коментарий</label>
-                                <textarea name="comment" id="comment" class="form-control" placeholder="Ваш коментарий">{{ old('comment') }}</textarea>
-                            </div>
-                            @error('comment')
-                            <div class="alert alert-danger">
-                                {{ $message }}
-                            </div>
-                            @enderror
-                            <button class="btn btn-primary mt-3">Сохранить</button>
-                        </form>
                     </div>
-                    <div class="col-md-4">
-                        <h4>Всего коментариев статьи: <strong style="color: green;">"{{ $article->title }}"</strong>({{ $comments->count() }} ком.):</h4>
-                        @foreach($comments as $comment)
-                        <div class="card text-center  mt-3">
-                            <div class="card-header">
-                                {{ $comment->title }}
+                    <div class="col-md-12">
+                        <div class="comments-container">
+
+
+                            <!-- Contenedor Principal -->
+                            <div class="comments-container">
+                                <h1>Всего коментариев статьи: <strong style="color: green;">"{{ $article->title }}"</strong>:</h1>
+
+                                <div class="col-12">
+                                    <div class="comments">
+                                        <div class="comments-details">
+                                            <span class="total-comments comments-sort">{{ $comments->count() }} Ком.</span>
+                                            <span class="dropdown">
+              <button type="button" class="btn dropdown-toggle" data-toggle="dropdown">Sort By <span class="caret"></span></button>
+              <div class="dropdown-menu">
+                <a href="#" class="dropdown-item">Top Comments</a>
+              <a href="#" class="dropdown-item">Newest First</a>
+              </div>
+          </span>
+                                        </div>
+                                        <div class="comment-box add-comment">
+                                            <form action="{{ route('comment.create') }}" method="post">
+                                                @csrf
+                                                <input type="text" name="title" id="title" placeholder="Введите название" value="{{ old('title') }}" class="form-control">
+                                                <br>
+                                                <input name="comment" id="comment" class="form-control" value="{{ old('comment') }}" placeholder="Ваш коментарий">
+                                                <input type="hidden" name="parent_id" value="">
+                                                <input type="hidden" name="article_id" value="{{ $article->id }}">
+                                                <button type="submit" class="btn btn-default">Сохранить</button>
+                                            </form>
+                                        </div>
+                                        @foreach($article->commentsWithoutParent as $comment)
+                                            @include('CRUD.articles.comments.body', compact('article'))
+                                        @endforeach
+                                    </div>
+                                </div>
                             </div>
-                            <div class="card-body">
-                                <p class="card-text">{{ $comment->comment }}</p>
-                            </div>
-                            <div class="card-footer text-muted">
-                                Коментарий оставлен: {{ $comment->created_at }} <br>
-                                Пользователем: @if($comment->user_id == 0)
-                                    <b>Аноним</b>
-                                @else
-                                    <b>{{ $comment->user->name }}</b>
-                                @endif
-                            </div>
-                            <a href="">Коментировать</a>
                         </div>
-                        @endforeach
                         <div class="mt-3">
                             {{ $comments->links('vendor.pagination.bootstrap-4') }}
                         </div>

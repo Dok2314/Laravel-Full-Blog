@@ -15,8 +15,7 @@
                 <li><a href="#" class="nav-link px-2 text-white">About</a></li>
             </ul>
 
-            <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" method="post" action="{{ route('search.search') }}">
-                @csrf
+            <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" method="get" action="{{ route('search.article') }}">
                 <input type="search"
                        class="form-control form-control-dark"
                        placeholder="Найти статью..."
@@ -30,8 +29,7 @@
                 @enderror
                 <button type="submit" class="btn btn-info mt-2">Поиск</button>
             </form>
-            <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" method="post" action="{{ route('Usersearch.search') }}">
-                @csrf
+            <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" method="get" action="{{ route('search.user') }}">
                 <input type="search"
                        class="form-control form-control-dark"
                        placeholder="Найти пользователя..."

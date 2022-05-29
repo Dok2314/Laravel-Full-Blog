@@ -168,11 +168,8 @@ Route::group(['prefix' => 'likes', 'middleware' => 'auth', 'as' => 'like.'], fun
 });
 
 Route::group(['prefix' => 'search', 'as' => 'search.', 'middleware' => 'auth'], function(){
-    Route::post('/article', [C\ArticlesController::class, 'search'])
-        ->name('search');
-});
-
-Route::group(['prefix' => 'search', 'as' => 'Usersearch.', 'middleware' => 'auth'], function(){
-    Route::post('/user', [C\UserController::class, 'search'])
-        ->name('search');
+    Route::get('/article', [C\ArticlesController::class, 'search'])
+        ->name('article');
+    Route::get('/user', [C\UserController::class, 'search'])
+        ->name('user');
 });
