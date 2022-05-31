@@ -11,6 +11,7 @@ use App\Models\Comment;
 use Auth;
 use App\Models\Tag;
 use App\Http\Requests\SearchRequest;
+use App\Events\NewUpdatedArticle;
 
 class ArticlesController extends Controller
 {
@@ -78,6 +79,8 @@ class ArticlesController extends Controller
         $article->article = $request->input('article');
         $article->category_id = $request->input('category');
         $article->tags()->sync($request->input('tags'));
+
+        event(new NewUpdatedArticle($article));
 
         $article->save();
 

@@ -182,5 +182,5 @@ Route::group(['prefix' => 'subscribe', 'as' => 'subscribe.', 'middleware' => 'au
 });
 
 Route::get('/test', function (){
-    dd('Test');
+    return view('report');
 });

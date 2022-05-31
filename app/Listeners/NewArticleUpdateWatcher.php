@@ -2,13 +2,12 @@
 
 namespace App\Listeners;
 
-use App\Events\NewCreatedArticle;
 use App\Helpers\Telegram;
+use App\Models\User;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
-use App\Models\User;
 
-class NewArticleWatcher
+class NewArticleUpdateWatcher
 {
     /**
      * Create the event listener.
@@ -25,14 +24,15 @@ class NewArticleWatcher
     /**
      * Handle the event.
      *
-     * @param  \App\Events\NewCreatedArticle  $event
+     * @param  object  $event
      * @return void
      */
-    public function handle(NewCreatedArticle $event)
+    public function handle($event)
     {
-        $user = User::where('id', $event->article->user_id)->first();
+        $user = User::where('id', $event->article->user_id)
+            ->first();
 
-        $message = sprintf("<b>Добавлена новая статья %s</b> пользователем:
+        $message = sprintf("<b>Статья %s обновлена</b> пользователем:
                                     ".PHP_EOL.$user->name.PHP_EOL.$user->email, $event->article->title);
 
         $this->telegram->sendMessage('963610354', $message);
