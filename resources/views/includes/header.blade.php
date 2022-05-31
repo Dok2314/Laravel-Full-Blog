@@ -48,7 +48,10 @@
                 @auth
                     <a href="{{ route('user.logout') }}"><button type="button" class="btn btn-warning">Выйти</button></a>
                     @if(Route::current()->getName() != 'user.admin')
-                        <a href="{{ route('user.admin') }}"><button type="button" class="btn btn-primary">Админка</button></a>
+                            <a href="{{ route('user.admin') }}"><button type="button" class="btn btn-primary">Админка</button></a>
+                    @endif
+                    @if(Route::current()->getName() != 'user.profile')
+                        <a href="{{ route('user.profile') }}"><button type="button" class="btn btn-primary">Профиль</button></a>
                     @endif
                 @endauth
                 @guest

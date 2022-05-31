@@ -86,18 +86,19 @@
                                                 <button type="submit" class="btn btn-default">Сохранить</button>
                                             </form>
                                         </div>
-                                        @foreach($article->commentsWithoutParent as $comment)
+
+                                        @foreach($comments as $comment)
                                             @include('CRUD.articles.comments.body', compact('article'))
                                         @endforeach
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="mt-3">
-                            {{ $comments->links('vendor.pagination.bootstrap-4') }}
-                        </div>
                     </div>
                 </div>
+            </div>
+            <div class="mt-3">
+                {{ $comments->links('vendor.pagination.bootstrap-4') }}
             </div>
         </div>
     </div>

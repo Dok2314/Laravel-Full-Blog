@@ -32,6 +32,13 @@ class RegistrationController extends Controller
 
         $this->guard()->login($user, true);
 
+        if($user->role_id == 3){
+            return redirect()->route('user.profile')->with('success', sprintf(
+                'Пользователь %s успешно зарегестрирован!',
+                $user->name
+            ));
+        }
+
         return redirect()->route('user.admin')->with('success', sprintf(
            'Пользователь %s успешно зарегестрирован!',
            $user->name

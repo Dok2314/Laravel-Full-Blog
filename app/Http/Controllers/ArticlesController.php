@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\NewCreatedArticle;
 use App\Http\Requests\ArticleRequest;
 use App\Http\Requests\ArticleUpdateRequest;
 use App\Models\Article;
@@ -35,14 +36,17 @@ class ArticlesController extends Controller
     public function store(ArticleRequest $request)
     {
         $path = $request->file('image')->store('articles', 'images');
+        $user = Auth::user();
 
         $article = new Article([
             'title'       => $request->input('title'),
             'image'       => $path,
             'article'     => $request->input('article'),
             'category_id' => $request->input('category'),
-            'user_id'     => Auth::user()->id
+            'user_id'     => $user->id
         ]);
+
+        event(new NewCreatedArticle($article));
 
         $article->save();
 
@@ -97,10 +101,9 @@ class ArticlesController extends Controller
     {
         $tags = $article->tags()->get();
         $article_id = $article->id;
-        $comments = Comment::where('article_id', $article_id)
-            ->orderBy('created_at','DESC')
-            ->paginate(5);
-
+        $comments = $article->commentsWithoutParent()
+            ->orderBy('created_at', 'DESC')
+            ->paginate(3);
 
         return view('CRUD.articles.preview', compact('article','tags','comments'));
     }

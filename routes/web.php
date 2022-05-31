@@ -37,6 +37,8 @@ Route::group(['prefix' => 'authorize', 'as' => 'user.'], function(){
     Route::group(['middleware' => 'auth'], function(){
        Route::view('/admin', 'authorize.admin')
            ->name('admin');
+        Route::view('/profile', 'authorize.profile')
+            ->name('profile');
     });
 
     Route::get('/logout', function (){
@@ -172,4 +174,13 @@ Route::group(['prefix' => 'search', 'as' => 'search.', 'middleware' => 'auth'], 
         ->name('article');
     Route::get('/user', [C\UserController::class, 'search'])
         ->name('user');
+});
+
+Route::group(['prefix' => 'subscribe', 'as' => 'subscribe.', 'middleware' => 'auth'], function(){
+    Route::get('/', [C\SubscribeController::class, 'view'])
+        ->name('view');
+});
+
+Route::get('/test', function (){
+    dd('Test');
 });

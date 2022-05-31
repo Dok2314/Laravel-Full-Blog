@@ -30,6 +30,13 @@ class LoginController extends Controller
 
             RateLimiter::clear($rateLimiterKey);
 
+            if($user->role_id == 3) {
+                return redirect()->route('user.profile')->with('success', sprintf(
+                    'С возвращением %s',
+                    $user->name
+                ));
+            }
+
             return redirect()->route('user.admin')->with('success', sprintf(
                 'С возвращением %s',
                 $user->name

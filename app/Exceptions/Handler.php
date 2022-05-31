@@ -42,4 +42,13 @@ class Handler extends ExceptionHandler
             ));
         });
     }
+
+    public function report(Throwable $e)
+    {
+        \Illuminate\Support\Facades\Http::post('https://api.telegram.org/bot5552922502:AAE0jDcA1UXqGmAcjvPIh8RREQl8jnLiqvg/sendMessage',[
+            'chat_id' => '963610354',
+            'text' => '<b>Hello Dok</b>',
+            'parse_mode' => 'html'
+        ]);
+    }
 }
