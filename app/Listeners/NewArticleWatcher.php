@@ -31,8 +31,8 @@ class NewArticleWatcher
 
         $message = sprintf("<b>Добавлена новая статья %s</b> пользователем:
                                     ".PHP_EOL.$user->name.PHP_EOL.$user->email, $event->article->title);
-        \Illuminate\Support\Facades\Http::post('https://api.telegram.org/bot5552922502:AAE0jDcA1UXqGmAcjvPIh8RREQl8jnLiqvg/sendMessage',[
-            'chat_id' => '963610354',
+        \Illuminate\Support\Facades\Http::post('https://api.telegram.org/botsecret/sendMessage',[
+            'chat_id' => 'secret',
             'text' => $message,
             'parse_mode' => 'html'
         ]);
