@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Events\NewUpdatedArticle;
+use App\Listeners\NewArticleMailingWatcher;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -21,6 +22,7 @@ class EventServiceProvider extends ServiceProvider
     protected $listen = [
         NewCreatedArticle::class => [
             NewArticleWatcher::class,
+            NewArticleMailingWatcher::class
         ],
         NewUpdatedArticle::class => [
             NewArticleUpdateWatcher::class

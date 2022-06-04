@@ -8,7 +8,7 @@
             @csrf
             @method('PUT')
             @include('includes.components.input', ['label' => 'Имя', 'name' => 'name', 'value' => $user->name ])
-            @include('includes.components.input', ['label' => 'E-mail', 'name' => 'email', 'value' => $user->email ])
+            @include('includes.components.input', ['label' => 'E-emails', 'name' => 'email', 'value' => $user->email ])
             @include('includes.components.input', ['label' => 'Новый Пароль', 'name' => 'password','type' => 'password' ])
 
             <select name="role_id" class="form-control mt-3">

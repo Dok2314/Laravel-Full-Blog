@@ -75,4 +75,9 @@ class User extends Authenticatable implements HasMedia
     public function likes(){
         return $this->belongsToMany(Article::class, 'article_user_likes');
     }
+
+    public function subscribes()
+    {
+        return $this->belongsToMany(Subscribe::class, 'user_mailing');
+    }
 }

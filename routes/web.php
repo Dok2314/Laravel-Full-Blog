@@ -37,7 +37,7 @@ Route::group(['prefix' => 'authorize', 'as' => 'user.'], function(){
     Route::group(['middleware' => 'auth'], function(){
        Route::view('/admin', 'authorize.admin')
            ->name('admin');
-        Route::view('/profile', 'authorize.profile')
+        Route::get('/profile', [C\UserController::class, 'profile'])
             ->name('profile');
     });
 
@@ -176,11 +176,20 @@ Route::group(['prefix' => 'search', 'as' => 'search.', 'middleware' => 'auth'], 
         ->name('user');
 });
 
-Route::group(['prefix' => 'subscribe', 'as' => 'subscribe.', 'middleware' => 'auth'], function(){
-    Route::get('/', [C\SubscribeController::class, 'view'])
-        ->name('view');
-});
+Route::group(['prefix' => 'subscribe', 'as' => 'subscribe.', 'middleware' => 'auth'], function (){
+   Route::get('/', [C\SubscribeController::class, 'index'])
+       ->name('index');
+   Route::get('create', [C\SubscribeController::class, 'create'])
+       ->name('create');
+   Route::post('create', [C\SubscribeController::class, 'store']);
+   Route::post('/user/subscribe', [C\SubscribeController::class, 'subscribes'])
+    ->name('userSubscribe');
 
-Route::get('/test', function (){
-    return view('report');
+   Route::group(['prefix' => '{subscribe}'], function (){
+        Route::get('edit',[C\SubscribeController::class, 'edit'])
+            ->name('edit');
+        Route::put('edit', [C\SubscribeController::class, 'update']);
+        Route::delete('delete', [C\SubscribeController::class, 'destroy'])
+            ->name('delete');
+   });
 });

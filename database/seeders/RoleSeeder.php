@@ -46,7 +46,11 @@ class RoleSeeder extends Seeder
                 'tag create',
                 'tag view',
                 'tag edit',
-                'tag delete'
+                'tag delete',
+                'subscribe create',
+                'subscribe view',
+                'subscribe edit',
+                'subscribe delete'
             ])->get());
         });
 

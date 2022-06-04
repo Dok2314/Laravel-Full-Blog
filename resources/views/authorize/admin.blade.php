@@ -37,6 +37,9 @@ $name = Auth::user()->name;
                            @can('tag create')
                                <a href="{{ route('tags.create') }}"><button class="btn btn-info mt-1">Создать тег</button></a>
                            @endcan
+                           @can('subscribe create')
+                               <a href="{{ route('subscribe.create') }}"><button class="btn btn-info mt-1">Создать подписку</button></a>
+                           @endcan
                        </div>
                    </div>
                    <div class="col-md-6">
@@ -61,6 +64,9 @@ $name = Auth::user()->name;
                        @endcan
                        @can('tag view')
                            <a href="{{ route('tags.index') }}"><button class="btn btn-primary mt-1">Теги</button></a>
+                       @endcan
+                       @can('subscribe view')
+                           <a href="{{ route('subscribe.index') }}"><button class="btn btn-primary mt-1">Подписки</button></a>
                        @endcan
                    </div>
                </div>

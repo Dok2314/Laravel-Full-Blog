@@ -132,5 +132,22 @@ class PermissionSeeder extends Seeder
             'name' => 'Удалять тег',
             'code' => 'tag delete'
         ]);
+
+        Permission::create([
+            'name' => 'Создавать подписку',
+            'code' => 'subscribe create'
+        ]);
+        Permission::create([
+            'name' => 'Просматривать подписку',
+            'code' => 'subscribe view'
+        ]);
+        Permission::create([
+            'name' => 'Редактировать подписку',
+            'code' => 'subscribe edit'
+        ]);
+        Permission::create([
+            'name' => 'Удалять подписку',
+            'code' => 'subscribe delete'
+        ]);
     }
 }

@@ -6,6 +6,7 @@ use App\Http\Requests\UpdateUserRequest;
 use App\Http\Requests\UserRequest;
 use App\Http\Requests\UserSearchRequest;
 use App\Models\Article;
+use App\Models\Subscribe;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use App\Models\Role;
@@ -75,5 +76,12 @@ class UserController extends Controller
     public function preview(User $user)
     {
         return view('CRUD.users.userPreview', compact('user'));
+    }
+
+    public function profile()
+    {
+        $subscribes = Subscribe::all();
+
+        return view('authorize.profile', compact('subscribes'));
     }
 }

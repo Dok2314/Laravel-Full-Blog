@@ -47,9 +47,9 @@ class ArticlesController extends Controller
             'user_id'     => $user->id
         ]);
 
-        event(new NewCreatedArticle($article));
-
         $article->save();
+
+        event(new NewCreatedArticle($article));
 
         $article->tags()->sync($request->tags);
 

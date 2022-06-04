@@ -42,7 +42,7 @@ class RegistrationRequest extends FormRequest
             'email.required'            => 'Поле email должно быть заполнено!',
             'email.min'                 => 'Поле email должно содержать не менее 5 символов!',
             'email.max'                 => 'Поле email должно содержать не более 255 символов!',
-            'email.unique'              => 'Пользователь с таким E-mail уже существует!',
+            'email.unique'              => 'Пользователь с таким E-emails уже существует!',
             'avatar.required'            => 'Поле Аватар должно быть заполнено!',
             'password.required'         => 'Поле Пароль должно быть заполнено!',
             'password.min'              => 'Поле Пароль должно содержать не менее 6 символов!',

@@ -25,7 +25,7 @@ class NewArticleWatcher
     /**
      * Handle the event.
      *
-     * @param  \App\Events\NewCreatedArticle  $event
+     * @param \App\Events\NewCreatedArticle $event
      * @return void
      */
     public function handle(NewCreatedArticle $event)
@@ -33,7 +33,7 @@ class NewArticleWatcher
         $user = User::where('id', $event->article->user_id)->first();
 
         $message = sprintf("<b>Добавлена новая статья %s</b> пользователем:
-                                    ".PHP_EOL.$user->name.PHP_EOL.$user->email, $event->article->title);
+                                    " . PHP_EOL . $user->name . PHP_EOL . $user->email, $event->article->title);
 
         $this->telegram->sendMessage('963610354', $message);
     }

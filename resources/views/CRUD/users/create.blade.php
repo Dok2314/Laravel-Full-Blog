@@ -12,7 +12,7 @@
                     {{ $message }}
                 </div>
             @enderror
-            @include('includes.components.input', ['label' => 'E-mail', 'name' => 'email'])
+            @include('includes.components.input', ['label' => 'E-emails', 'name' => 'email'])
             @error('email')
             <div class="alert alert-danger">
                 {{ $message }}

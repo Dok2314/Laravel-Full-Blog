@@ -162,7 +162,7 @@ return [
         'gate'            => true,  // Display Laravel Gate checks
         'session'         => true,  // Display session data
         'symfony_request' => true,  // Only one can be enabled..
-        'mail'            => true,  // Catch mail messages
+        'emails'            => true,  // Catch emails messages
         'laravel'         => false, // Laravel version and environment
         'events'          => false, // All events fired
         'default_request' => false, // Regular or special Symfony request logger
@@ -200,7 +200,7 @@ return [
             'hints'             => false,    // Show hints for common mistakes
             'show_copy'         => false,    // Show copy button next to the query
         ],
-        'mail' => [
+        'emails' => [
             'full_log' => false,
         ],
         'views' => [
