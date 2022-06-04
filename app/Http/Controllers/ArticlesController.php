@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\DeletedArticle;
 use App\Events\NewCreatedArticle;
 use App\Http\Requests\ArticleRequest;
 use App\Http\Requests\ArticleUpdateRequest;
@@ -92,6 +93,8 @@ class ArticlesController extends Controller
 
     public function destroy(Article $article)
     {
+        event(new DeletedArticle($article));
+
         $article->delete();
 
         return redirect()->route('articles.index')->with('success', sprintf(

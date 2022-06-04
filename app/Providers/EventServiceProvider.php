@@ -2,7 +2,9 @@
 
 namespace App\Providers;
 
+use App\Events\DeletedArticle;
 use App\Events\NewUpdatedArticle;
+use App\Listeners\DeletedArticleListener;
 use App\Listeners\NewArticleMailingWatcher;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
@@ -26,6 +28,9 @@ class EventServiceProvider extends ServiceProvider
         ],
         NewUpdatedArticle::class => [
             NewArticleUpdateWatcher::class
+        ],
+        DeletedArticle::class => [
+            DeletedArticleListener::class
         ]
     ];
 
