@@ -30,7 +30,7 @@ class ArticlesController extends Controller
 
     public function index()
     {
-        $articles = Article::paginate(10);
+        $articles = Article::withTrashed()->paginate(10);
 
         return view('CRUD.articles.index', compact('articles'));
     }
@@ -121,5 +121,14 @@ class ArticlesController extends Controller
             ->get();
 
         return view('search.index', compact('results'));
+    }
+
+    public function restore(int $article)
+    {
+        Article::withTrashed()
+            ->find($article)
+            ->restore();
+
+        return redirect()->back()->with('success', 'Статья успешно востановлена!');
     }
 }

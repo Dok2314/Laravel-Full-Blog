@@ -13,7 +13,7 @@ class RoleController extends Controller
 {
     public function index()
     {
-        $roles = Role::all();
+        $roles = Role::withTrashed()->paginate(10);
 
         return view('CRUD.roles.index', compact('roles'));
     }
@@ -67,5 +67,14 @@ class RoleController extends Controller
            'Роль %s удалена',
            $role->name
         ));
+    }
+
+    public function restore($role)
+    {
+        Role::withTrashed()
+            ->find($role)
+            ->restore();
+
+        return redirect()->back()->with('success', 'Роль успешно востнановлена!');
     }
 }

@@ -84,6 +84,7 @@ Route::group(['prefix' => 'roles', 'as' => 'roles.'], function () {
         Route::get('edit', [C\RoleController::class, 'edit'])->name('edit');
         Route::put('edit', [C\RoleController::class, 'update']);
         Route::delete('/', [C\RoleController::class, 'destroy'])->name('delete');
+        Route::put('restore', [C\RoleController::class, 'restore'])->name('restore');
     });
 });
 
@@ -98,6 +99,8 @@ Route::group(['prefix' => 'users', 'as' => 'users.'], function () {
         Route::delete('/', [C\UserController::class, 'destroy'])->name('delete');
         Route::get('preview', [C\UserController::class, 'preview'])
             ->name('user_preview');
+        Route::put('restore', [C\UserController::class, 'restore'])
+            ->name('restore');
     });
 });
 
@@ -116,6 +119,8 @@ Route::group(['prefix' => 'articles', 'as' => 'articles.'], function (){
        Route::put('edit', [C\ArticlesController::class, 'update']);
        Route::delete('delete',[C\ArticlesController::class, 'destroy'])
            ->name('delete');
+       Route::put('restore', [C\ArticlesController::class, 'restore'])
+           ->name('restore');
    });
 });
 

@@ -15,7 +15,7 @@ class UserController extends Controller
 {
     public function index()
     {
-        $users = User::paginate(10);
+        $users = User::withTrashed()->paginate(10);
 
         return view('CRUD.users.index', compact('users'));
     }
@@ -83,5 +83,24 @@ class UserController extends Controller
         $subscribes = Subscribe::all();
 
         return view('authorize.profile', compact('subscribes'));
+    }
+
+    public function destroy(User $user)
+    {
+        $user->delete();
+
+        return redirect()->back()->with('success', sprintf(
+            'Пользователь %s, успешно удален!',
+            $user->name
+        ));
+    }
+
+    public function restore($user)
+    {
+        User::withTrashed()
+            ->find($user)
+            ->restore();
+
+        return redirect()->back()->with('success', 'Пользователь успешно востановлен!');
     }
 }

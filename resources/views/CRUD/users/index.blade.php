@@ -25,12 +25,28 @@
                 <td>{{ $user->email }}</td>
                 <td>{{ $user->created_at }}</td>
                 <td style="text-align: center">
+                    @if(!$user->deleted_at)
                     @can('users delete')
-                        <a href=""><button class="btn btn-danger">Удалить</button></a>
+                        <form action="{{ route('users.delete', $user) }}" method="post">
+                            @csrf
+                            @method('DELETE')
+                            <button class="btn btn-danger">
+                                Удалить
+                            </button>
+                        </form>
                     @endcan
                     @can('users edit')
                             <a href="{{ route('users.edit', $user) }}"><button class="btn btn-primary">Редактировать</button></a>
                     @endcan
+                    @else
+                        <form action="{{ route('users.restore', $user) }}" method="post">
+                            @csrf
+                            @method('PUT')
+                            <button class="btn btn-warning">
+                                Восстановить Пользователя
+                            </button>
+                        </form>
+                    @endif
                 </td>
             </tr>
         @endforeach

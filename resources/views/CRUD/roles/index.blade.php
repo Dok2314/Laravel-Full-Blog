@@ -19,6 +19,7 @@
                 <td>{{ $role->name }}</td>
                 <td>{{ $role->created_at }}</td>
                 <td style="text-align: center">
+                    @if(!$role->deleted_at)
                     @can('role delete')
                         <form action="{{ route('roles.delete', $role) }}" method="post">
                             @method('DELETE')
@@ -29,9 +30,21 @@
                     @can('role edit')
                             <a href="{{ route('roles.edit', $role) }}"><button class="btn btn-primary">Редактировать</button></a>
                     @endcan
+                    @else
+                        <form action="{{ route('roles.restore', $role) }}" method="post">
+                            @csrf
+                            @method('PUT')
+                            <button class="btn btn-warning">
+                                Восстановить Роль
+                            </button>
+                        </form>
+                    @endif
                 </td>
             </tr>
         @endforeach
         </tbody>
     </table>
+    <div class="mb-5">
+        {{ $roles->links('vendor.pagination.bootstrap-4') }}
+    </div>
 @endsection

@@ -4,8 +4,10 @@ namespace App\Providers;
 
 use App\Events\DeletedArticle;
 use App\Events\NewUpdatedArticle;
+use App\Events\UserRegistered;
 use App\Listeners\DeletedArticleListener;
 use App\Listeners\NewArticleMailingWatcher;
+use App\Listeners\UserRegisteredListener;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;

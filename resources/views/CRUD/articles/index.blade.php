@@ -23,6 +23,7 @@
                 <td>{{ $article->article }}</td>
                 <td>{{ $article->category->title }}</td>
                 <td>
+                    @if(!$article->deleted_at)
                     <form action="{{ route('articles.delete', $article) }}" method="post">
                         @csrf
                         @method('DELETE')
@@ -33,6 +34,15 @@
                             Редактировать
                         </button>
                     </a>
+                    @else
+                        <form action="{{ route('articles.restore', $article) }}" method="post">
+                            @csrf
+                            @method('PUT')
+                            <button class="btn btn-warning">
+                                Восстановить Статью
+                            </button>
+                        </form>
+                    @endif
                 </td>
             </tr>
         @endforeach
